@@ -60,4 +60,7 @@ The Sift prioritizes **clarity and trust** over flashy gimmicks. Every design ch
 ```bash
 The-Sift/
 │── index.html   
-│── README.md    
+│── README.md
+│── style.css
+│── script.js
+ 
