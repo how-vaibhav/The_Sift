@@ -3,23 +3,20 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ClearNews — Readable • Accessible • Credible</title>
+    <title>The Sift — Readable • Accessible • Credible</title>
     <meta
       name="description"
       content="A concept redesign of a news site balancing readability, accessibility, and credibility for students, professionals, and elderly readers."
     />
 
-    <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- Bootstrap Icons -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
       rel="stylesheet"
     />
-    <!-- Google Fonts (accessible friendly) -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap"
       rel="stylesheet"
@@ -86,9 +83,26 @@
 
       /* Navbar */
       .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
         backdrop-filter: saturate(1.2) blur(6px);
         background: color-mix(in oklab, var(--cn-bg) 70%, transparent);
         box-shadow: var(--cn-shadow);
+      }
+
+      /* Container width for large screens */
+      .main-container {
+        max-width: 1400px;
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
+
+      @media (min-width: 992px) {
+        .main-container {
+          padding-left: 3rem;
+          padding-right: 3rem;
+        }
       }
 
       /* Hero */
@@ -238,16 +252,15 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg py-3" aria-label="Primary">
-      <div class="container">
+      <div class="container main-container">
         <a
           class="navbar-brand fw-bold d-flex align-items-center gap-2"
           href="#"
-          aria-label="ClearNews Home"
+          aria-label="The Sift Home"
         >
           <i class="bi bi-journal-richtext text-primary"></i>
-          <span>Clear<span class="text-primary">News</span></span>
+          <span>The <span class="text-primary">Sift</span></span>
         </a>
 
         <button
@@ -276,7 +289,7 @@
                 id="searchInput"
                 class="form-control border-start-0"
                 type="search"
-                placeholder="Search topics, sources, or tags… (e.g., climate, India, AI)"
+                placeholder="Search topics, sources, or tags…"
                 aria-label="Search"
               />
               <button class="btn btn-primary" type="button" id="searchBtn">
@@ -424,10 +437,8 @@
       </div>
     </nav>
 
-    <!-- MAIN -->
-    <main class="container my-4" id="main">
+    <main class="container main-container my-4" id="main">
       <div class="row g-4">
-        <!-- Sidebar Filters -->
         <aside class="col-lg-3">
           <div
             class="p-3 rounded-2xl shadow-xl"
@@ -441,9 +452,7 @@
                 id="categoryChips"
                 role="group"
                 aria-label="Categories"
-              >
-                <!-- chips injected by JS -->
-              </div>
+              ></div>
             </div>
             <hr />
             <div class="mb-3">
@@ -453,7 +462,10 @@
                 role="group"
                 aria-label="Credibility"
               >
-                <button class="btn btn-outline-success btn-sm" data-cred="high">
+                <button
+                  class="btn btn-outline-success btn-sm active"
+                  data-cred="high"
+                >
                   High
                 </button>
                 <button
@@ -506,13 +518,10 @@
           >
             <h2 class="h6">Trending on Google</h2>
             <p class="small text-muted">Popular queries people search for:</p>
-            <ul class="list-unstyled" id="googleTrends">
-              <!-- injected by JS: illustrative topics from Google Search autocomplete style -->
-            </ul>
+            <ul class="list-unstyled" id="googleTrends"></ul>
           </div>
         </aside>
 
-        <!-- Content -->
         <section class="col-lg-9">
           <div class="card hero-card mb-4">
             <div class="row g-0 align-items-center">
@@ -567,9 +576,12 @@
             <div class="small text-muted" id="resultsCount">0 articles</div>
           </div>
 
-          <div id="feed" class="row g-4" aria-live="polite" aria-busy="true">
-            <!-- News cards injected by JS -->
-          </div>
+          <div
+            id="feed"
+            class="row g-4"
+            aria-live="polite"
+            aria-busy="true"
+          ></div>
 
           <div class="text-center mt-4">
             <button class="btn btn-outline-secondary px-4" id="loadMore">
@@ -580,11 +592,10 @@
       </div>
     </main>
 
-    <!-- Reader Modal -->
     <div
       class="modal fade"
       id="readerModal"
-      tabindex="-1"
+      tab-index="-1"
       aria-labelledby="readerTitle"
       aria-hidden="true"
     >
@@ -677,7 +688,6 @@
       </div>
     </div>
 
-    <!-- Keyboard Shortcuts Modal -->
     <div
       class="modal fade"
       id="kbModal"
@@ -715,7 +725,6 @@
       </div>
     </div>
 
-    <!-- Toast container -->
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
       <div
         id="toaster"
@@ -736,29 +745,55 @@
       </div>
     </div>
 
-    <footer class="container py-5 border-top">
-      <div class="row g-4">
-        <div class="col-md-8">
-          <h4 class="fw-bold">Our Accessibility & Trust Pledge</h4>
+    <footer class="container main-container py-5 border-top">
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-5">
+          <h4 class="fw-bold">The Sift</h4>
           <p class="text-muted m-0">
-            We design for inclusivity: readable typography, adjustable density,
-            dyslexia-friendly fonts, keyboard navigation, and high-contrast
-            themes. We explain why a story is credible and surface sources
-            prominently.
+            A trusted source for clear, credible news, designed for everyone.
           </p>
+          <div class="mt-3">
+            <a href="#" class="me-2 text-primary"
+              ><i class="bi bi-twitter-x h4"></i
+            ></a>
+            <a href="#" class="me-2 text-primary"
+              ><i class="bi bi-facebook h4"></i
+            ></a>
+            <a href="#" class="me-2 text-primary"
+              ><i class="bi bi-linkedin h4"></i
+            ></a>
+          </div>
         </div>
-        <div class="col-md-4 text-md-end">
-          <button class="btn btn-outline-secondary" id="viewBookmarks">
+        <div class="col-md-4">
+          <h5 class="fw-bold">Newsletter</h5>
+          <p class="small text-muted">
+            Stay informed with our daily brief delivered to your inbox.
+          </p>
+          <div class="input-group mb-3">
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Your email address"
+              aria-label="Your email address"
+            />
+            <button class="btn btn-primary" type="button">Subscribe</button>
+          </div>
+        </div>
+        <div class="col-md-3 text-md-end">
+          <button class="btn btn-outline-secondary w-100" id="viewBookmarks">
             <i class="bi bi-bookmarks me-1"></i> View bookmarks
           </button>
         </div>
       </div>
+      <div class="row mt-4">
+        <div class="col-12 text-center text-muted small">
+          &copy; 2025 The Sift. All rights reserved.
+        </div>
+      </div>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Single-file App JS -->
     <script>
       // =====================
       // Demo data & utilities
@@ -791,7 +826,7 @@
       ];
 
       // Mock stories: In production, fetch from your backend which aggregates reputable sources (e.g., Reuters, AP, BBC).
-      const MOCK_STORIES = Array.from({ length: 24 }).map((_, i) => ({
+      const MOCK_STORIES = Array.from({ length: 40 }).map((_, i) => ({
         id: i + 1,
         title: [
           "Government unveils new education policy focus on digital equity",
@@ -818,6 +853,22 @@
           "Major sports event adopts concussion protocol",
           "Libraries reimagined as digital learning hubs",
           "Researchers publish AI ethics benchmark",
+          "New policy to boost EV manufacturing",
+          "Robotics competition sees record participation",
+          "Global supply chain issues ease slightly",
+          "Gene therapy shows promise in clinical trials",
+          "AI-generated art sparks copyright debate",
+          "Rural broadband initiative exceeds targets",
+          "Volcano eruption in Pacific raises tsunami concerns",
+          "Inflation rate drops to three-year low",
+          "SpaceX launches reusable rocket for new constellation",
+          "Global summit on climate finance concludes",
+          "Smart cities project wins international award",
+          "New film festival celebrates independent cinema",
+          "Archaeologists discover ancient trade route artifacts",
+          "E-commerce boom drives warehouse automation",
+          "Cryptocurrency regulations proposed in new bill",
+          "Solar energy grid expands in southern states",
         ][i],
         source: [
           "Reuters",
@@ -830,7 +881,11 @@
           "Bloomberg",
           "The Verge",
           "Nature",
-        ][i % 10],
+          "TechCrunch",
+          "Science Magazine",
+          "CNN",
+          "Al Jazeera",
+        ][i % 14],
         img: `https://picsum.photos/seed/${i + 11}/800/500`,
         minutes: 4 + (i % 12),
         credibility: [
@@ -844,13 +899,17 @@
           "medium",
           "high",
           "high",
-        ][i % 10],
+          "medium",
+          "high",
+          "low",
+          "medium",
+        ][i % 14],
         category: CATEGORIES[(i % (CATEGORIES.length - 1)) + 1],
         factChecked: i % 3 !== 0,
         published: new Date(Date.now() - i * 3600 * 1000).toISOString(),
         summary:
           "This is a concise, readable summary highlighting the core facts first, then adding context and quotes. Ideal for skimming.",
-        body: `\n<p><strong>Lead:</strong> The story opens with the most verifiable facts, then explains the context in plain language. Bullet points summarize key takeaways for quick scanning.</p>\n<ul>\n  <li>What happened: verifiable event with time and place.</li>\n  <li>Why it matters: impact on readers and society.</li>\n  <li>What’s next: upcoming decisions, dates, or data releases.</li>\n</ul>\n<p>Quotes are attributed, data sources are linked, and any uncertainty or limitations are clearly labeled. Jargon is minimized, acronyms are expanded on first use, and numbers are rounded for clarity. Charts and images include descriptive alt text.</p>\n<p class='mb-0'>Our <em>Transparency Box</em> explains methods and provides links to full datasets when available.</p>`,
+        body: `\n<p><strong>Lead:</strong> The story opens with the most verifiable facts, then explains the context in plain language. Bullet points summarize key takeaways for quick scanning.</p>\n<ul>\n  <li>What happened: verifiable event with time and place.</li>\n  <li>Why it matters: impact on readers and society.</li>\n  <li>What’s next: upcoming decisions, dates, or data releases.</li>\n</ul>\n<p>Quotes are attributed, data sources are linked, and any uncertainty or limitations are clearly labeled. Jargon is minimized, acronyms are expanded on first use, and numbers are rounded for clarity. Charts and images include descriptive alt text.</p>\n<p class='mb-0'>Our <em>Transparency Box</em> explains methods and provides links to full datasets when available.</p>`,
         whyCredible: [
           "Source has a track record of factual reporting and corrections.",
           "Multiple independent confirmations included.",
@@ -867,25 +926,25 @@
       // State
       const state = {
         theme:
-          localStorage.getItem("cn-theme") ||
+          localStorage.getItem("sift-theme") ||
           (window.matchMedia("(prefers-color-scheme: dark)").matches
             ? "dark"
             : "light"),
-        highContrast: localStorage.getItem("cn-contrast") === "1",
-        fontScale: parseFloat(localStorage.getItem("cn-font-scale") || "1"),
-        density: localStorage.getItem("cn-density") || "comfort",
-        accessibleFont: localStorage.getItem("cn-accessible-font") === "1",
+        highContrast: localStorage.getItem("sift-contrast") === "1",
+        fontScale: parseFloat(localStorage.getItem("sift-font-scale") || "1"),
+        density: localStorage.getItem("sift-density") || "comfort",
+        accessibleFont: localStorage.getItem("sift-accessible-font") === "1",
         filters: {
           q: "",
           category: "Top",
-          cred: "low",
+          cred: "all",
           maxMinutes: 10,
           factOnly: false,
         },
         cursorIndex: 0,
         page: 1,
         pageSize: 8,
-        bookmarks: JSON.parse(localStorage.getItem("cn-bookmarks") || "[]"),
+        bookmarks: JSON.parse(localStorage.getItem("sift-bookmarks") || "[]"),
       };
 
       // Apply initial UI preferences
@@ -954,8 +1013,8 @@
         if (state.filters.category && state.filters.category !== "Top") {
           items = items.filter((s) => s.category === state.filters.category);
         }
-        if (state.filters.cred === "high") {
-          items = items.filter((s) => s.credibility === "high");
+        if (state.filters.cred !== "all") {
+          items = items.filter((s) => s.credibility === state.filters.cred);
         }
         if (state.filters.maxMinutes) {
           items = items.filter((s) => s.minutes <= state.filters.maxMinutes);
@@ -1020,7 +1079,11 @@
             <span class="badge text-bg-light"><i class="bi bi-newspaper me-1"></i>${
               s.source
             }</span>
-            <span class="badge badge-cred" data-level="${s.credibility}">${
+            <span class="badge badge-cred" data-level="${
+              s.credibility
+            }" data-bs-toggle="tooltip" data-bs-placement="top" title="${getCredibilityTooltip(
+          s.credibility
+        )}">${
           s.credibility.charAt(0).toUpperCase() + s.credibility.slice(1)
         }</span>
           </div>
@@ -1052,7 +1115,20 @@
         col
           .querySelector('[data-action="bookmark"]')
           .addEventListener("click", (e) => toggleBookmark(e, s));
+
+        // Initialize tooltips
+        new bootstrap.Tooltip(col.querySelector('[data-bs-toggle="tooltip"]'));
         return col;
+      }
+
+      function getCredibilityTooltip(level) {
+        if (level === "high") {
+          return "Fact-checked by third-party organizations and uses multiple reputable sources.";
+        }
+        if (level === "medium") {
+          return "Published by a mainstream news outlet but may lack detailed sourcing or be an opinion piece.";
+        }
+        return "Source may have a history of misinformation or be based on unverified claims.";
       }
 
       // Reader
@@ -1122,12 +1198,15 @@
       function saveBookmark(id) {
         if (!state.bookmarks.includes(id)) {
           state.bookmarks.push(id);
-          localStorage.setItem("cn-bookmarks", JSON.stringify(state.bookmarks));
+          localStorage.setItem(
+            "sift-bookmarks",
+            JSON.stringify(state.bookmarks)
+          );
         }
       }
       function removeBookmark(id) {
         state.bookmarks = state.bookmarks.filter((x) => x !== id);
-        localStorage.setItem("cn-bookmarks", JSON.stringify(state.bookmarks));
+        localStorage.setItem("sift-bookmarks", JSON.stringify(state.bookmarks));
       }
       function toggleBookmark(e, s) {
         const icon = e.currentTarget.querySelector("i");
@@ -1190,12 +1269,12 @@
 
       // Persist preferences
       function persistPrefs() {
-        localStorage.setItem("cn-theme", state.theme);
-        localStorage.setItem("cn-contrast", state.highContrast ? "1" : "");
-        localStorage.setItem("cn-font-scale", String(state.fontScale));
-        localStorage.setItem("cn-density", state.density);
+        localStorage.setItem("sift-theme", state.theme);
+        localStorage.setItem("sift-contrast", state.highContrast ? "1" : "");
+        localStorage.setItem("sift-font-scale", String(state.fontScale));
+        localStorage.setItem("sift-density", state.density);
         localStorage.setItem(
-          "cn-accessible-font",
+          "sift-accessible-font",
           state.accessibleFont ? "1" : ""
         );
       }
@@ -1314,6 +1393,13 @@
             applyPrefs();
           });
 
+        document
+          .getElementById("searchInput")
+          .addEventListener("input", (e) => {
+            state.filters.q = e.target.value.trim();
+            renderFeed(true);
+          });
+
         document.getElementById("searchBtn").addEventListener("click", () => {
           state.filters.q = document.getElementById("searchInput").value.trim();
           renderFeed(true);
@@ -1322,6 +1408,7 @@
           .getElementById("searchInput")
           .addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
+              e.preventDefault();
               state.filters.q = e.target.value.trim();
               renderFeed(true);
             }
@@ -1329,6 +1416,10 @@
 
         document.querySelectorAll("[data-cred]").forEach((btn) =>
           btn.addEventListener("click", () => {
+            document
+              .querySelectorAll("[data-cred]")
+              .forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
             state.filters.cred = btn.dataset.cred;
             renderFeed(true);
           })
@@ -1362,6 +1453,12 @@
             document.getElementById("rtRange").value = 10;
             document.getElementById("rtVal").textContent = 10;
             document.getElementById("factCheckOnly").checked = false;
+            document
+              .querySelectorAll("[data-cred]")
+              .forEach((b) => b.classList.remove("active"));
+            document
+              .querySelector('[data-cred="high"]')
+              .classList.add("active");
             renderFeed(true);
           });
 
@@ -1433,21 +1530,29 @@
 
       // Init
       (function init() {
-        // Prefs
         applyPrefs();
-        // Sidebar
         buildSidebar();
-        // Filters UI
         document.getElementById("rtRange").value = state.filters.maxMinutes;
         document.getElementById("rtVal").textContent = state.filters.maxMinutes;
         document.getElementById("dyslexiaFontSwitch").checked =
           state.accessibleFont;
-        // Render
         renderFeed(true);
-        // Wire UI
         wireUI();
-        // Keyboard
         setupKeyboard();
+
+        // Auto-show dropdowns
+        const audienceDropdown = new bootstrap.Dropdown(
+          document.querySelector(
+            '[data-bs-toggle="dropdown"][aria-label="Audience presets"]'
+          )
+        );
+        const displayDropdown = new bootstrap.Dropdown(
+          document.querySelector(
+            '[data-bs-toggle="dropdown"][aria-label="Display options"]'
+          )
+        );
+        audienceDropdown.show();
+        displayDropdown.show();
       })();
     </script>
   </body>
