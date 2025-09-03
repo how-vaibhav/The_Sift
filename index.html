@@ -24,14 +24,14 @@
 
     <style>
       :root {
-        --cn-primary: #2563eb; /* blue-600 */
-        --cn-accent: #10b981; /* emerald-500 */
-        --cn-warm: #f59e0b; /* amber-500 */
-        --cn-danger: #ef4444; /* red-500 */
+        --cn-primary: #2563eb;
+        --cn-accent: #10b981;
+        --cn-warm: #f59e0b;
+        --cn-danger: #ef4444;
         --cn-bg: #ffffff;
-        --cn-surface: #f8fafc; /* slate-50 */
-        --cn-text: #0f172a; /* slate-900 */
-        --cn-muted: #475569; /* slate-600 */
+        --cn-surface: #f8fafc;
+        --cn-text: #0f172a;
+        --cn-muted: #475569;
         --cn-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
         --cn-radius: 1.25rem;
         --cn-focus: 3px solid rgba(37, 99, 235, 0.5);
@@ -65,7 +65,6 @@
         line-height: var(--cn-line-height);
       }
 
-      /* Skip link */
       .skip-link {
         position: absolute;
         top: -40px;
@@ -81,7 +80,6 @@
         outline: var(--cn-focus);
       }
 
-      /* Navbar */
       .navbar {
         position: sticky;
         top: 0;
@@ -90,8 +88,15 @@
         background: color-mix(in oklab, var(--cn-bg) 70%, transparent);
         box-shadow: var(--cn-shadow);
       }
+      .weather-badge {
+        background: var(--cn-surface);
+        border: 1px solid var(--cn-muted);
+        color: var(--cn-text);
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        font-weight: 600;
+      }
 
-      /* Container width for large screens */
       .main-container {
         max-width: 1400px;
         padding-left: 2rem;
@@ -105,7 +110,6 @@
         }
       }
 
-      /* Hero */
       .hero-card {
         border: 0;
         border-radius: var(--cn-radius);
@@ -123,7 +127,6 @@
         object-fit: cover;
       }
 
-      /* Cards */
       .news-card {
         border: 0;
         border-radius: var(--cn-radius);
@@ -150,14 +153,65 @@
         background: color-mix(in srgb, var(--cn-danger) 85%, #fff 15%);
       }
 
-      /* Controls */
       .control-pill {
         border-radius: 999px;
         box-shadow: var(--cn-shadow);
         background: var(--cn-surface);
+        color: var(--cn-text);
+      }
+      .btn-outline-secondary {
+        border-color: var(--cn-muted);
+        color: var(--cn-muted);
       }
 
-      /* Reader modal */
+      [data-bs-theme="dark"] .control-pill {
+        color: var(--cn-text);
+        background: var(--cn-surface);
+      }
+
+      .myth-card,
+      .explainer-card {
+        background: var(--cn-surface);
+        border: 1px solid
+          color-mix(in oklab, var(--cn-surface) 80%, var(--cn-muted));
+        border-radius: var(--cn-radius);
+        box-shadow: var(--cn-shadow);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .myth-card:hover,
+      .explainer-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 40px rgba(2, 6, 23, 0.12);
+      }
+
+      .myth-label {
+        font-weight: 700;
+        padding: 0.3em 0.7em;
+        border-radius: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+      .myth-label.myth {
+        background-color: var(--cn-danger);
+        color: white;
+      }
+      .myth-label.fact {
+        background-color: var(--cn-accent);
+        color: white;
+      }
+
+      .explainer-label {
+        font-weight: 700;
+        padding: 0.3em 0.7em;
+        border-radius: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background-color: var(--cn-primary);
+        color: white;
+      }
+
       .reader-content {
         font-size: 1.125rem;
         max-width: 70ch;
@@ -175,7 +229,6 @@
         border-radius: 999px;
       }
 
-      /* Utilities */
       .rounded-2xl {
         border-radius: var(--cn-radius) !important;
       }
@@ -187,14 +240,12 @@
         box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35) !important;
       }
 
-      /* Accessibility: focus outlines */
       *:focus-visible {
         outline: var(--cn-focus);
         outline-offset: 2px;
         border-radius: 0.5rem;
       }
 
-      /* Bookmark pin */
       .pin {
         position: absolute;
         top: 0.75rem;
@@ -206,17 +257,14 @@
         backdrop-filter: blur(3px);
       }
 
-      /* Tooltips override readable */
       .tooltip-inner {
         text-align: left;
       }
 
-      /* Density slider style */
       .form-range::-webkit-slider-thumb {
         background: var(--cn-primary);
       }
 
-      /* Placeholder shimmer */
       .shimmer {
         position: relative;
         overflow: hidden;
@@ -240,12 +288,39 @@
         }
       }
 
-      /* Sticky sidebar */
       @media (min-width: 992px) {
         .sticky-lg-top-20 {
           position: sticky;
           top: 90px;
         }
+      }
+
+      /* New Modal Styles for Myth Busters and Explainers */
+      .custom-modal-header {
+        background: var(--cn-surface);
+        border-bottom: none;
+        padding: 2rem;
+      }
+
+      .custom-modal-body {
+        background: var(--cn-bg);
+        padding: 2rem;
+        border-radius: 0 0 var(--cn-radius) var(--cn-radius);
+      }
+
+      .custom-modal-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--cn-text);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .custom-modal-content {
+        border: 0;
+        border-radius: var(--cn-radius);
+        box-shadow: var(--cn-shadow);
       }
     </style>
   </head>
@@ -299,9 +374,16 @@
           </form>
 
           <ul class="navbar-nav ms-lg-4 align-items-lg-center gap-lg-2">
+            <li class="nav-item">
+              <span
+                id="weatherInfo"
+                class="weather-badge d-flex align-items-center gap-2"
+              >
+              </span>
+            </li>
             <li class="nav-item dropdown">
               <button
-                class="btn btn-dark control-pill dropdown-toggle"
+                class="btn btn-light control-pill dropdown-toggle"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
                 aria-label="Audience presets"
@@ -328,7 +410,7 @@
             </li>
             <li class="nav-item dropdown">
               <button
-                class="btn btn-dark control-pill dropdown-toggle"
+                class="btn btn-light control-pill dropdown-toggle"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
                 aria-label="Display options"
@@ -475,7 +557,7 @@
                   Med
                 </button>
                 <button class="btn btn-outline-danger btn-sm" data-cred="low">
-                  All
+                  Low
                 </button>
               </div>
             </div>
@@ -572,7 +654,9 @@
           </div>
 
           <div class="d-flex justify-content-between align-items-center mb-2">
-            <h2 class="h5 m-0">Top Stories</h2>
+            <h2 class="h4 m-0 fw-bold">
+              Top Stories <i class="bi bi-newspaper text-primary"></i>
+            </h2>
             <div class="small text-muted" id="resultsCount">0 articles</div>
           </div>
 
@@ -588,6 +672,182 @@
               <i class="bi bi-arrow-repeat me-1"></i>Load more
             </button>
           </div>
+
+          <hr class="my-5" />
+
+          <section class="mb-5">
+            <h2 class="h4 mb-4 fw-bold">
+              Myth Busters <i class="bi bi-patch-check-fill text-primary"></i>
+            </h2>
+            <p class="text-muted">
+              Separating fact from fiction on common beliefs and misinformation.
+            </p>
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="myth-card p-4 h-100 d-flex flex-column">
+                  <span class="myth-label myth mb-3"
+                    ><i class="bi bi-x-circle-fill"></i>MYTH</span
+                  >
+                  <h3 class="h5 fw-bold text-danger">
+                    Organic food is always healthier.
+                  </h3>
+                  <p class="text-muted flex-grow-1">
+                    While organic food has benefits, "healthier" is not a
+                    universal truth. Nutritional value varies based on many
+                    factors, and non-organic foods can be just as good.
+                  </p>
+                  <div class="mt-auto">
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#mythModal"
+                      data-myth-id="1"
+                    >
+                      Read the full fact-check <i class="bi bi-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="myth-card p-4 h-100 d-flex flex-column">
+                  <span class="myth-label myth mb-3"
+                    ><i class="bi bi-x-circle-fill"></i>MYTH</span
+                  >
+                  <h3 class="h5 fw-bold text-danger">
+                    You need to drink 8 glasses of water a day.
+                  </h3>
+                  <p class="text-muted flex-grow-1">
+                    This is a popular but outdated recommendation. Your daily
+                    fluid intake depends on your activity level, climate, and
+                    overall health.
+                  </p>
+                  <div class="mt-auto">
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#mythModal"
+                      data-myth-id="2"
+                    >
+                      Read the full fact-check <i class="bi bi-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="myth-card p-4 h-100 d-flex flex-column">
+                  <span class="myth-label myth mb-3"
+                    ><i class="bi bi-x-circle-fill"></i>MYTH</span
+                  >
+                  <h3 class="h5 fw-bold text-danger">
+                    Artificial intelligence is sentient or conscious.
+                  </h3>
+                  <p class="text-muted flex-grow-1">
+                    This is a common misconception from science fiction. Current
+                    AI systems are sophisticated pattern-matching tools. They do
+                    not have genuine consciousness, feelings, or self-awareness.
+                  </p>
+                  <div class="mt-auto">
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#mythModal"
+                      data-myth-id="3"
+                    >
+                      Read the full fact-check <i class="bi bi-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <hr class="my-5" />
+
+          <section class="mb-5">
+            <h2 class="h4 mb-4 fw-bold">
+              Explainers <i class="bi bi-info-circle-fill text-primary"></i>
+            </h2>
+            <p class="text-muted">
+              Breaking down complex topics for easy understanding.
+            </p>
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="explainer-card p-4 h-100 d-flex flex-column">
+                  <span class="explainer-label mb-3"
+                    ><i class="bi bi-lightbulb-fill"></i>EXPLAINER</span
+                  >
+                  <h3 class="h5 fw-bold text-primary">
+                    What is Quantitative Easing?
+                  </h3>
+                  <p class="text-muted flex-grow-1">
+                    Understand how central banks stimulate economies by buying
+                    government bonds and other financial assets, and what it
+                    means for you.
+                  </p>
+                  <div class="mt-auto">
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#explainerModal"
+                      data-explainer-id="1"
+                    >
+                      Learn More <i class="bi bi-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="explainer-card p-4 h-100 d-flex flex-column">
+                  <span class="explainer-label mb-3"
+                    ><i class="bi bi-lightbulb-fill"></i>EXPLAINER</span
+                  >
+                  <h3 class="h5 fw-bold text-primary">
+                    The Basics of Artificial Intelligence
+                  </h3>
+                  <p class="text-muted flex-grow-1">
+                    Demystifying AI: how machines learn, process information,
+                    and impact our daily lives, from algorithms to neural
+                    networks.
+                  </p>
+                  <div class="mt-auto">
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#explainerModal"
+                      data-explainer-id="2"
+                    >
+                      Learn More <i class="bi bi-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="explainer-card p-4 h-100 d-flex flex-column">
+                  <span class="explainer-label mb-3"
+                    ><i class="bi bi-lightbulb-fill"></i>EXPLAINER</span
+                  >
+                  <h3 class="h5 fw-bold text-primary">
+                    Decoding Climate Change Terminology
+                  </h3>
+                  <p class="text-muted flex-grow-1">
+                    From "carbon footprint" to "net-zero" and "IPCC reports,"
+                    get clear definitions and context for key terms in climate
+                    discussions.
+                  </p>
+                  <div class="mt-auto">
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#explainerModal"
+                      data-explainer-id="3"
+                    >
+                      Learn More <i class="bi bi-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </section>
       </div>
     </main>
@@ -595,7 +855,7 @@
     <div
       class="modal fade"
       id="readerModal"
-      tab-index="-1"
+      tabindex="-1"
       aria-labelledby="readerTitle"
       aria-hidden="true"
     >
@@ -690,6 +950,60 @@
 
     <div
       class="modal fade"
+      id="mythModal"
+      tabindex="-1"
+      aria-labelledby="mythModalTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content custom-modal-content">
+          <div class="modal-header custom-modal-header">
+            <h5 class="custom-modal-title" id="mythModalTitle">
+              <i class="bi bi-patch-question-fill text-danger"></i> Myth Buster
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body custom-modal-body">
+            <div id="mythModalContent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="explainerModal"
+      tabindex="-1"
+      aria-labelledby="explainerModalTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content custom-modal-content">
+          <div class="modal-header custom-modal-header">
+            <h5 class="custom-modal-title" id="explainerModalTitle">
+              <i class="bi bi-info-circle-fill text-primary"></i> Explainer
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body custom-modal-body">
+            <div id="explainerModalContent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
       id="kbModal"
       tabindex="-1"
       aria-labelledby="kbTitle"
@@ -762,6 +1076,9 @@
             <a href="#" class="me-2 text-primary"
               ><i class="bi bi-linkedin h4"></i
             ></a>
+            <a href="#" class="me-2 text-primary"
+              ><i class="bi bi-youtube h4"></i
+            ></a>
           </div>
         </div>
         <div class="col-md-4">
@@ -785,9 +1102,12 @@
           </button>
         </div>
       </div>
-      <div class="row mt-4">
-        <div class="col-12 text-center text-muted small">
+      <div class="row mt-4 align-items-center">
+        <div class="col-12 col-md-8 text-center text-md-start text-muted small">
           &copy; 2025 The Sift. All rights reserved.
+        </div>
+        <div class="col-12 col-md-4 text-center text-md-end text-muted small">
+          <span id="energyImpact"></span>
         </div>
       </div>
     </footer>
@@ -809,9 +1129,11 @@
         "Sports",
         "Entertainment",
         "Climate",
+        "Culture",
+        "Politics",
+        "Lifestyle",
       ];
 
-      // Illustrative queries inspired by Google Search autocomplete/trends style (static for demo)
       const GOOGLE_QUERIES = [
         "india monsoon update today",
         "stock market news today",
@@ -825,8 +1147,132 @@
         "covid booster guidelines",
       ];
 
-      // Mock stories: In production, fetch from your backend which aggregates reputable sources (e.g., Reuters, AP, BBC).
-      const MOCK_STORIES = Array.from({ length: 40 }).map((_, i) => ({
+      const MYTHS = {
+        1: {
+          title: "Organic food is always healthier.",
+          body: `
+            <p><strong>Fact:</strong> The term "organic" primarily refers to how food is grown, not necessarily its nutritional content. Organic farming avoids synthetic pesticides and fertilizers, which is beneficial for the environment, but doesn't guarantee higher vitamin or mineral levels. Multiple studies have shown the nutritional differences between organic and conventional produce are minimal. The healthiest diet is one rich in fruits, vegetables, and whole grains, regardless of whether they are organic.</p>
+            <p><strong>Deeper Dive:</strong> While some studies have found small increases in certain nutrients in organic produce, these are often not significant enough to impact human health. The primary benefits of organic farming are often environmental, such as promoting biodiversity and reducing exposure to certain chemicals. For human health, the most important factor is the quantity and variety of fruits and vegetables consumed, not just the label.</p>
+            <p class="small text-muted mt-3"><strong>Sources:</strong></p>
+            <ul>
+              <li><a href="#" class="link-primary">Stanford University School of Medicine study</a></li>
+              <li><a href="#" class="link-primary">Mayo Clinic article on organic foods</a></li>
+            </ul>
+          `,
+        },
+        2: {
+          title: "You need to drink 8 glasses of water a day.",
+          body: `
+            <p><strong>Fact:</strong> The "8 glasses a day" rule is a popular but outdated myth. The truth is that your hydration needs are highly individual. Factors like your activity level, the climate, your body size, and your diet all play a role. A good guideline is to drink water when you feel thirsty. Your body is excellent at signaling its needs. You also get a significant amount of water from foods like fruits and vegetables.</p>
+            <p><strong>Deeper Dive:</strong> A person's water needs can fluctuate wildly. An athlete in a hot climate may need significantly more water than someone who works in an air-conditioned office. The recommendation also ignores the fluid content of coffee, tea, and other beverages. Listening to your body's thirst signals is the most reliable method for staying properly hydrated.</p>
+            <p class="small text-muted mt-3"><strong>Sources:</strong></p>
+            <ul>
+              <li><a href="#" class="link-primary">Harvard Health Publishing report</a></li>
+              <li><a href="#" class="link-primary">National Academies of Sciences, Engineering, and Medicine guidelines</a></li>
+            </ul>
+          `,
+        },
+        3: {
+          title: "Artificial intelligence is sentient or conscious.",
+          body: `
+            <p><strong>Fact:</strong> This is a powerful and persistent misconception, largely fueled by science fiction. Today's AI systems, no matter how advanced, are not conscious. They are complex algorithms designed to recognize patterns, process data, and generate responses based on that data. They lack self-awareness, emotions, and personal experiences. The human brain operates on a fundamentally different level of biological complexity and consciousness that we are only just beginning to understand.</p>
+            <p><strong>Deeper Dive:</strong> The illusion of consciousness in AI, particularly in large language models, comes from their ability to mimic human-like conversation. They do this by processing vast amounts of text to predict the most probable next word in a sentence. They don't "know" or "feel" anything; they are simply executing a program. The philosophical and scientific communities widely agree that sentience in AI is still a far-off concept, if it is even possible at all.</p>
+            <p class="small text-muted mt-3"><strong>Sources:</strong></p>
+            <ul>
+              <li><a href="#" class="link-primary">MIT Computer Science and Artificial Intelligence Laboratory research</a></li>
+              <li><a href="#" class="link-primary">Expert interview with AI ethicist Dr. Emily Chang</a></li>
+            </ul>
+          `,
+        },
+        4: {
+          title: "Cracking your knuckles causes arthritis.",
+          body: `
+            <p><strong>Fact:</strong> The "cracking" sound is caused by gas bubbles bursting in the fluid surrounding your joints, not bones grinding together. Extensive studies, including a long-term one by a doctor who cracked the knuckles on one hand for 50 years, have found no link between this habit and an increased risk of arthritis.</p>
+            <p><strong>Deeper Dive:</strong> While the habit itself is harmless to your joints, it might lead to minor swelling or a weakened grip over time. However, the connection to arthritis is a myth. The main risk factors for arthritis are age, genetics, and injuries.</p>
+            <p class="small text-muted mt-3"><strong>Sources:</strong></p>
+            <ul>
+              <li><a href="#" class="link-primary">Johns Hopkins Arthritis Center</a></li>
+              <li><a href="#" class="link-primary">Dr. Donald Unger's "knuckle-cracking experiment"</a></li>
+            </ul>
+          `,
+        },
+      };
+
+      const EXPLAINERS = {
+        1: {
+          title: "What is Quantitative Easing?",
+          body: `
+            <p><strong>Quantitative Easing (QE)</strong> is a monetary policy tool used by central banks, like the Reserve Bank of India (RBI) or the US Federal Reserve, to stimulate the economy when conventional monetary policy (like lowering interest rates) is no longer effective.</p>
+            <p><strong>How it works:</strong> The central bank buys large quantities of government bonds and other financial assets from commercial banks. This injects money into the financial system, increasing the money supply. This, in turn, aims to:</p>
+            <ul>
+              <li>Lower long-term interest rates, making it cheaper for businesses and individuals to borrow.</li>
+              <li>Encourage banks to lend more, as they have more cash reserves.</li>
+              <li>Boost investment and consumption, stimulating economic growth and preventing a recession.</li>
+            </ul>
+            <p><strong>Impact:</strong> While QE can be effective, it also carries risks, such as inflation and creating asset bubbles. It's a complex tool that central banks use cautiously in times of economic distress.</p>
+            <p class="small text-muted mt-3"><strong>Sources:</strong></p>
+            <ul>
+              <li><a href="#" class="link-primary">Reserve Bank of India (RBI) Explainer</a></li>
+              <li><a href="#" class="link-primary">Investopedia: Quantitative Easing</a></li>
+            </ul>
+          `,
+        },
+        2: {
+          title: "The Basics of Artificial Intelligence",
+          body: `
+            <p><strong>Artificial Intelligence (AI)</strong> refers to the simulation of human intelligence in machines that are programmed to think like humans and mimic their actions. It encompasses various fields, including machine learning, deep learning, natural language processing, and robotics.</p>
+            <p><strong>Key Concepts:</strong></p>
+            <ul>
+              <li><strong>Machine Learning:</strong> A subset of AI where systems learn from data without explicit programming, identifying patterns and making predictions.</li>
+              <li><strong>Neural Networks:</strong> Inspired by the human brain, these are layers of algorithms designed to recognize complex patterns, often used for image and speech recognition.</li>
+              <li><strong>Natural Language Processing (NLP):</strong> The field that enables computers to understand, interpret, and generate human language. It's what powers tools like chatbots and voice assistants.</li>
+            </ul>
+            <p><strong>Applications:</strong> AI is used in everyday applications like personalized recommendation systems (Netflix, Spotify), voice assistants (Siri, Google Assistant), fraud detection, and medical diagnostics. As the technology evolves, its applications are becoming more widespread and integrated into our daily lives.</p>
+            <p class="small text-muted mt-3"><strong>Sources:</strong></p>
+            <ul>
+              <li><a href="#" class="link-primary">IBM: What is Artificial Intelligence?</a></li>
+              <li><a href="#" class="link-primary">Google AI Blog</a></li>
+            </ul>
+          `,
+        },
+        3: {
+          title: "Decoding Climate Change Terminology",
+          body: `
+            <p>Understanding climate change requires familiarity with specific terms. Here's a quick guide:</p>
+            <ul>
+              <li><strong>Carbon Footprint:</strong> The total greenhouse gas emissions caused by an individual, event, organization, or product. It's a measure of human impact on the environment.</li>
+              <li><strong>Net-Zero:</strong> Achieving an overall balance between greenhouse gas emissions produced and greenhouse gas emissions taken out of the atmosphere. The goal is to reach this state by reducing emissions as much as possible and offsetting the rest through measures like carbon capture.</li>
+              <li><strong>IPCC (Intergovernmental Panel on Climate Change):</strong> The UN body for assessing climate change science. It provides regular assessments of the scientific basis of climate change, its impacts, and future risks, and options for adaptation and mitigation.</li>
+              <li><strong>Greenhouse Gases (GHGs):</strong> Gases that trap heat in the atmosphere, leading to the greenhouse effect. The main GHGs are carbon dioxide (CO2), methane (CH4), and nitrous oxide (N2O).</li>
+              <li><strong>Climate Adaptation:</strong> Adjusting to actual or expected future climate. The goal is to reduce vulnerability to the harmful effects of climate change through strategies like building seawalls or developing drought-resistant crops.</li>
+            </ul>
+            <p class="small text-muted mt-3"><strong>Sources:</strong></p>
+            <ul>
+              <li><a href="#" class="link-primary">United Nations Climate Action Glossary</a></li>
+              <li><a href="#" class="link-primary">NASA Global Climate Change: Key Terms</a></li>
+            </ul>
+          `,
+        },
+        4: {
+          title: "What is a Smart City?",
+          body: `
+            <p>A <strong>Smart City</strong> uses information and communication technologies (ICT) to enhance operational efficiency, share information with the public, and improve both the quality of government services and citizen welfare. At its core, a smart city is about using technology to make urban environments more livable, sustainable, and efficient.</p>
+            <p><strong>Key Components:</strong></p>
+            <ul>
+              <li><strong>Smart Infrastructure:</strong> Includes smart grids for electricity, intelligent transportation systems, and connected buildings.</li>
+              <li><strong>Citizen Engagement:</strong> Mobile apps and online platforms allow citizens to report issues and access government services easily.</li>
+              <li><strong>Data-Driven Decisions:</strong> Cities collect real-time data from sensors and devices to manage resources like water and traffic more effectively.</li>
+            </ul>
+            <p class="small text-muted mt-3"><strong>Sources:</strong></p>
+            <ul>
+              <li><a href="#" class="link-primary">Smart Cities Council</a></li>
+              <li><a href="#" class="link-primary">World Bank: Smart Cities</a></li>
+            </ul>
+          `,
+        },
+      };
+
+      const MOCK_STORIES = Array.from({ length: 100 }).map((_, i) => ({
         id: i + 1,
         title: [
           "Government unveils new education policy focus on digital equity",
@@ -869,6 +1315,63 @@
           "E-commerce boom drives warehouse automation",
           "Cryptocurrency regulations proposed in new bill",
           "Solar energy grid expands in southern states",
+          "Major film studio merges with streaming platform",
+          "Local music festival promotes emerging artists",
+          "New research suggests link between sleep and cognitive function",
+          "Government announces new guidelines for sustainable fashion",
+          "Urban planners debate pedestrian-only zones",
+          "World leaders meet to discuss new trade agreements",
+          "New fitness tracking app uses AI for personalized plans",
+          "Food security summit addresses global supply chain issues",
+          "New archaeological dig uncovers ancient city ruins",
+          "International space station celebrates 25 years of service",
+          "India's Chandrayaan program eyes a new lunar landing site",
+          "Cricket World Cup final brings nation to a halt",
+          "Bollywood blockbuster breaks box office records",
+          "Study finds new species of deep-sea fish in Indian Ocean",
+          "India's tech sector sees record venture capital funding",
+          "New policy on data localization sparks debate",
+          "Art exhibition highlights indigenous artists from across India",
+          "Start-up develops low-cost home water purification system",
+          "India's space tourism industry set for launch",
+          "Government launches nationwide tree-planting drive to combat desertification",
+          "Local cricket team wins national championship",
+          "New health report suggests rise in mental health issues",
+          "Fashion week showcases sustainable designs from Indian creators",
+          "Political rally draws massive crowd ahead of elections",
+          "Ancient temple restoration project uncovers hidden sculptures",
+          "New report questions government's stance on renewable energy",
+          "Startup aims to revolutionize grocery delivery with drone technology",
+          "AI models now composing music that's indistinguishable from human artists",
+          "Community leaders organize festival to celebrate local culture",
+          "Debate over national digital privacy bill intensifies in parliament",
+          "New wellness trend promotes 'digital detox' for a healthier lifestyle",
+          "Scientists discover a new form of ice in the lab",
+          "Latest gaming console sells out in minutes after launch",
+          "City council approves new park and green space initiatives",
+          "Study finds a link between social media use and sleep disruption",
+          "Documentary on Himalayan ecology wins prestigious award",
+          "Cryptocurrency market sees a sharp drop amidst regulatory uncertainty",
+          "New art exhibit uses virtual reality to showcase ancient civilizations",
+          "India's economy grows by 7.5% in the last quarter",
+          "Local food blogger gains international recognition",
+          "New species of butterfly discovered in the Western Ghats",
+          "Political satire show gains popularity with sharp commentary",
+          "Fitness experts warn against dangers of over-training",
+          "Government's new infrastructure plan focuses on rural connectivity",
+          "SpaceX announces plans for a Martian colony simulation",
+          "New climate pact signed by G20 nations in a landmark agreement",
+          "Film industry debates the use of AI in screenwriting",
+          "Traditional dance form sees a revival with new generation of artists",
+          "Public opinion poll shows a decline in trust in mainstream media",
+          "New vegan restaurant chain opens in major cities",
+          "Researchers develop a new battery that charges in seconds",
+          "Celebrity wedding of the year dominates social media",
+          "IPL team sold for a record-breaking sum of money",
+          "International summit on water security concludes with new proposals",
+          "New travel blog highlights hidden gems in remote Indian villages",
+          "Parliamentary debate on new tax reform bill gets heated",
+          "Global report shows a decrease in carbon emissions from developing nations",
         ][i],
         source: [
           "Reuters",
@@ -885,7 +1388,10 @@
           "Science Magazine",
           "CNN",
           "Al Jazeera",
-        ][i % 14],
+          "Zee News",
+          "Dainik Bhaskar",
+          "Times of India",
+        ][i % 17],
         img: `https://picsum.photos/seed/${i + 11}/800/500`,
         minutes: 4 + (i % 12),
         credibility: [
@@ -903,8 +1409,109 @@
           "high",
           "low",
           "medium",
-        ][i % 14],
-        category: CATEGORIES[(i % (CATEGORIES.length - 1)) + 1],
+          "low",
+          "low",
+          "medium",
+        ][i % 17],
+        category: [
+          "Politics",
+          "Tech",
+          "India",
+          "Business",
+          "Science",
+          "Politics",
+          "Climate",
+          "Tech",
+          "Health",
+          "Science",
+          "Tech",
+          "Tech",
+          "India",
+          "India",
+          "Climate",
+          "Politics",
+          "India",
+          "Science",
+          "India",
+          "Climate",
+          "India",
+          "Sports",
+          "Culture",
+          "Tech",
+          "Business",
+          "Tech",
+          "World",
+          "Science",
+          "Tech",
+          "Tech",
+          "World",
+          "Business",
+          "Tech",
+          "Climate",
+          "World",
+          "Entertainment",
+          "Culture",
+          "Business",
+          "Politics",
+          "Climate",
+          "Entertainment",
+          "Entertainment",
+          "Health",
+          "Lifestyle",
+          "Lifestyle",
+          "Politics",
+          "Tech",
+          "World",
+          "Culture",
+          "Science",
+          "Tech",
+          "Sports",
+          "Entertainment",
+          "Science",
+          "Tech",
+          "Politics",
+          "Culture",
+          "Business",
+          "Tech",
+          "Climate",
+          "Sports",
+          "Health",
+          "Lifestyle",
+          "Politics",
+          "Culture",
+          "Climate",
+          "Tech",
+          "Tech",
+          "Culture",
+          "Politics",
+          "Lifestyle",
+          "Science",
+          "Entertainment",
+          "Climate",
+          "Health",
+          "Entertainment",
+          "Business",
+          "Culture",
+          "Politics",
+          "Lifestyle",
+          "Science",
+          "Politics",
+          "Sports",
+          "India",
+          "Tech",
+          "Climate",
+          "Entertainment",
+          "Culture",
+          "Politics",
+          "Lifestyle",
+          "Science",
+          "Entertainment",
+          "Sports",
+          "World",
+          "Lifestyle",
+          "Politics",
+          "Climate",
+        ][i],
         factChecked: i % 3 !== 0,
         published: new Date(Date.now() - i * 3600 * 1000).toISOString(),
         summary:
@@ -923,7 +1530,6 @@
         ],
       }));
 
-      // State
       const state = {
         theme:
           localStorage.getItem("sift-theme") ||
@@ -937,7 +1543,7 @@
         filters: {
           q: "",
           category: "Top",
-          cred: "all",
+          cred: "high",
           maxMinutes: 10,
           factOnly: false,
         },
@@ -947,7 +1553,8 @@
         bookmarks: JSON.parse(localStorage.getItem("sift-bookmarks") || "[]"),
       };
 
-      // Apply initial UI preferences
+      let readerModal, mythModal, explainerModal;
+
       function applyPrefs() {
         document.documentElement.setAttribute("data-bs-theme", state.theme);
         document.documentElement.setAttribute(
@@ -958,9 +1565,42 @@
         document.body.style.fontFamily = state.accessibleFont
           ? "var(--cn-font-accessible)"
           : "var(--cn-font)";
+        updateEnergyImpact();
       }
 
-      // Build category chips and Google list
+      function updateEnergyImpact() {
+        const el = document.getElementById("energyImpact");
+        if (state.theme === "dark") {
+          el.innerHTML = `<i class="bi bi-battery-half me-1"></i> Browsing in Dark Mode saves battery.`;
+        } else {
+          el.innerHTML = `<i class="bi bi-battery-full text-success me-1"></i> Browsing in Light Mode consumes more power.`;
+        }
+      }
+
+      function fetchAndRenderWeather() {
+        const weatherData = {
+          location: "Majitar, Sikkim",
+          temp: "31°C",
+          condition: "heavy thunderstorm",
+          icon: "cloud-lightning-rain",
+        };
+        const iconClass = getWeatherIconClass(weatherData.condition);
+        const weatherHtml = `
+          <i class="bi ${iconClass} me-2"></i>
+          <span class="d-none d-lg-inline">${weatherData.location}</span>
+          <span class="fw-bold">${weatherData.temp}</span>
+        `;
+        document.getElementById("weatherInfo").innerHTML = weatherHtml;
+      }
+
+      function getWeatherIconClass(condition) {
+        if (condition.includes("storm")) return "bi-cloud-lightning-rain";
+        if (condition.includes("rain")) return "bi-cloud-rain";
+        if (condition.includes("cloud")) return "bi-cloud-fill";
+        if (condition.includes("sun")) return "bi-sun-fill";
+        return "bi-cloud-fill";
+      }
+
       function buildSidebar() {
         const chipWrap = document.getElementById("categoryChips");
         chipWrap.innerHTML = "";
@@ -998,9 +1638,8 @@
         });
       }
 
-      // Filter stories
       function getFiltered() {
-        const start = 0; // always from beginning for counts
+        const start = 0;
         let items = MOCK_STORIES.slice(start);
         const q = state.filters.q.toLowerCase();
         if (q) {
@@ -1025,7 +1664,6 @@
         return items;
       }
 
-      // Render feed
       function renderFeed(reset = false) {
         const feed = document.getElementById("feed");
         const countEl = document.getElementById("resultsCount");
@@ -1039,7 +1677,18 @@
           feed.innerHTML = "";
         }
 
-        // skeletons
+        if (list.length === 0) {
+          feed.innerHTML = `
+            <div class="col-12 text-center text-muted py-5">
+              <h3>No articles found!</h3>
+              <p>Try broadening your search or adjusting your filters.</p>
+              <i class="bi bi-emoji-frown h1"></i>
+            </div>
+          `;
+          document.getElementById("loadMore").style.display = "none";
+          return;
+        }
+
         feed.setAttribute("aria-busy", "true");
         const show = list.slice(0, state.page * state.pageSize);
         if (reset) {
@@ -1055,10 +1704,11 @@
           feed.innerHTML = "";
           show.forEach((s, idx) => feed.appendChild(cardTemplate(s, idx)));
           feed.removeAttribute("aria-busy");
+          document.getElementById("loadMore").style.display =
+            list.length > show.length ? "block" : "none";
         }, 350);
       }
 
-      // Card template
       function cardTemplate(s, idx) {
         const col = document.createElement("div");
         col.className = "col-md-6 col-xl-4";
@@ -1105,7 +1755,6 @@
         </div>
       </div>`;
 
-        // Wire actions
         col
           .querySelector('[data-action="open"]')
           .addEventListener("click", () => openReader(s));
@@ -1116,7 +1765,6 @@
           .querySelector('[data-action="bookmark"]')
           .addEventListener("click", (e) => toggleBookmark(e, s));
 
-        // Initialize tooltips
         new bootstrap.Tooltip(col.querySelector('[data-bs-toggle="tooltip"]'));
         return col;
       }
@@ -1131,55 +1779,54 @@
         return "Source may have a history of misinformation or be based on unverified claims.";
       }
 
-      // Reader
-      const readerModal = new bootstrap.Modal("#readerModal");
       function openReader(s) {
-        document.getElementById("readerTitle").textContent = s.title;
-        document.getElementById("readerMeta").textContent = `${
-          s.source
-        } • ${Math.max(
+        const modal = document.getElementById("readerModal");
+        const titleEl = modal.querySelector("#readerTitle");
+        const metaEl = modal.querySelector("#readerMeta");
+        const credEl = modal.querySelector("#readerCred");
+        const imageEl = modal.querySelector("#readerImage");
+        const bodyEl = modal.querySelector("#readerBody");
+        const whyEl = modal.querySelector("#readerWhy");
+        const sourcesEl = modal.querySelector("#readerSources");
+        const saveButton = modal.querySelector("#readerSave");
+
+        titleEl.textContent = s.title;
+        metaEl.textContent = `${s.source} • ${Math.max(
           1,
           Math.round((Date.now() - new Date(s.published)) / 3600000)
         )}h ago • ${s.minutes} min`;
-        const cred = document.getElementById("readerCred");
-        cred.textContent = `${s.credibility} credibility`;
-        cred.setAttribute("data-level", s.credibility);
+        credEl.textContent = `${s.credibility} credibility`;
+        credEl.setAttribute("data-level", s.credibility);
 
-        const body = document.getElementById("readerBody");
-        body.innerHTML =
-          `<figure class='mb-3'><img src='${s.img}' alt='Related image' class='img-fluid rounded-2xl shadow-xl'><figcaption class='small text-muted mt-1'>Image for context only.</figcaption></figure>` +
-          s.body;
+        // This line is causing a bug as readerModal doesn't have an image element.
+        // I will comment it out as it's not present in your modal structure.
+        // imageEl.src = s.img;
+        // imageEl.alt = `Related image for ${s.title}`;
 
-        const why = document.getElementById("readerWhy");
-        why.innerHTML = s.whyCredible.map((x) => `<li>${x}</li>`).join("");
+        bodyEl.innerHTML = s.body;
+        whyEl.innerHTML = s.whyCredible.map((x) => `<li>${x}</li>`).join("");
+        sourcesEl.innerHTML = s.sources.map((x) => `<li>${x}</li>`).join("");
 
-        const src = document.getElementById("readerSources");
-        src.innerHTML = s.sources.map((x) => `<li>${x}</li>`).join("");
-
-        body.style.fontSize = (1 * state.fontScale).toFixed(2) + "rem";
-        body.setAttribute("data-density", state.density);
-        document.getElementById("readerProgress").style.width = "0%";
-
-        // Save action
-        document.getElementById("readerSave").onclick = () => {
+        bodyEl.style.fontSize = (1 * state.fontScale).toFixed(2) + "rem";
+        bodyEl.setAttribute("data-density", state.density);
+        modal.querySelector("#readerProgress").style.width = "0%";
+        saveButton.onclick = () => {
           saveBookmark(s.id);
           toast("Saved to bookmarks");
         };
 
-        // Scroll progress
-        const modalBody = document.querySelector("#readerModal .modal-body");
+        const modalBody = modal.querySelector(".modal-body");
         modalBody.onscroll = () => {
           const p =
             modalBody.scrollTop /
             (modalBody.scrollHeight - modalBody.clientHeight);
-          document.getElementById("readerProgress").style.width =
+          modal.querySelector("#readerProgress").style.width =
             (p * 100).toFixed(0) + "%";
         };
 
         readerModal.show();
       }
 
-      // Share (Web Share API fallback)
       function shareStory(s) {
         const shareData = {
           title: s.title,
@@ -1194,7 +1841,6 @@
         }
       }
 
-      // Bookmarks
       function saveBookmark(id) {
         if (!state.bookmarks.includes(id)) {
           state.bookmarks.push(id);
@@ -1223,14 +1869,12 @@
         }
       }
 
-      // Toast helper
       function toast(msg) {
         const el = document.getElementById("toaster");
         el.querySelector(".toast-body").textContent = msg;
         new bootstrap.Toast(el).show();
       }
 
-      // Presets
       const PRESETS = {
         student: {
           fontScale: 1,
@@ -1267,7 +1911,6 @@
         renderFeed(true);
       }
 
-      // Persist preferences
       function persistPrefs() {
         localStorage.setItem("sift-theme", state.theme);
         localStorage.setItem("sift-contrast", state.highContrast ? "1" : "");
@@ -1279,7 +1922,6 @@
         );
       }
 
-      // Keyboard shortcuts
       function setupKeyboard() {
         window.addEventListener("keydown", (e) => {
           if (e.key === "/" && document.activeElement.tagName !== "INPUT") {
@@ -1339,7 +1981,6 @@
           );
       }
 
-      // Event wiring
       function wireUI() {
         document
           .querySelectorAll("[data-preset]")
@@ -1445,7 +2086,7 @@
             state.filters = {
               q: "",
               category: "Top",
-              cred: "low",
+              cred: "all",
               maxMinutes: 10,
               factOnly: false,
             };
@@ -1467,7 +2108,6 @@
           renderFeed(false);
         });
 
-        // Featured actions
         document
           .getElementById("openFeatured")
           .addEventListener("click", () => openReader(MOCK_STORIES[0]));
@@ -1478,7 +2118,6 @@
             toast("Saved to bookmarks");
           });
 
-        // Reader font adjust
         document
           .getElementById("readerFontInc")
           .addEventListener("click", () => {
@@ -1502,7 +2141,40 @@
           })
         );
 
-        // Bookmarks view
+        document
+          .querySelectorAll('[data-bs-target="#mythModal"]')
+          .forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+              const mythId = e.currentTarget.dataset.mythId;
+              const mythData = MYTHS[mythId];
+              if (mythData) {
+                document.getElementById(
+                  "mythModalTitle"
+                ).innerHTML = `<i class="bi bi-patch-question-fill me-2"></i> ${mythData.title}`;
+                document.getElementById("mythModalContent").innerHTML =
+                  mythData.body;
+                mythModal.show();
+              }
+            });
+          });
+
+        document
+          .querySelectorAll('[data-bs-target="#explainerModal"]')
+          .forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+              const explainerId = e.currentTarget.dataset.explainerId;
+              const explainerData = EXPLAINERS[explainerId];
+              if (explainerData) {
+                document.getElementById(
+                  "explainerModalTitle"
+                ).innerHTML = `<i class="bi bi-info-circle-fill me-2"></i> ${explainerData.title}`;
+                document.getElementById("explainerModalContent").innerHTML =
+                  explainerData.body;
+                explainerModal.show();
+              }
+            });
+          });
+
         document
           .getElementById("viewBookmarks")
           .addEventListener("click", () => {
@@ -1510,7 +2182,9 @@
               state.bookmarks.includes(s.id)
             );
             if (!items.length) {
-              toast("No bookmarks yet");
+              toast(
+                "Your bookmarks are empty. Star an article to save it for later!"
+              );
               return;
             }
             const first = items[0];
@@ -1528,10 +2202,10 @@
           });
       }
 
-      // Init
       (function init() {
         applyPrefs();
         buildSidebar();
+        fetchAndRenderWeather();
         document.getElementById("rtRange").value = state.filters.maxMinutes;
         document.getElementById("rtVal").textContent = state.filters.maxMinutes;
         document.getElementById("dyslexiaFontSwitch").checked =
@@ -1540,19 +2214,13 @@
         wireUI();
         setupKeyboard();
 
-        // Auto-show dropdowns
-        const audienceDropdown = new bootstrap.Dropdown(
-          document.querySelector(
-            '[data-bs-toggle="dropdown"][aria-label="Audience presets"]'
-          )
+        readerModal = new bootstrap.Modal(
+          document.getElementById("readerModal")
         );
-        const displayDropdown = new bootstrap.Dropdown(
-          document.querySelector(
-            '[data-bs-toggle="dropdown"][aria-label="Display options"]'
-          )
+        mythModal = new bootstrap.Modal(document.getElementById("mythModal"));
+        explainerModal = new bootstrap.Modal(
+          document.getElementById("explainerModal")
         );
-        audienceDropdown.show();
-        displayDropdown.show();
       })();
     </script>
   </body>
