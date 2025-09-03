@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ClearNews — Readable • Accessible • Credible</title>
+    <meta
+      name="description"
+      content="A concept redesign of a news site balancing readability, accessibility, and credibility for students, professionals, and elderly readers."
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts (accessible friendly) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --cn-primary: #2563eb; /* blue-600 */
+        --cn-accent: #10b981; /* emerald-500 */
+        --cn-warm: #f59e0b; /* amber-500 */
+        --cn-danger: #ef4444; /* red-500 */
+        --cn-bg: #ffffff;
+        --cn-surface: #f8fafc; /* slate-50 */
+        --cn-text: #0f172a; /* slate-900 */
+        --cn-muted: #475569; /* slate-600 */
+        --cn-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+        --cn-radius: 1.25rem;
+        --cn-focus: 3px solid rgba(37, 99, 235, 0.5);
+        --cn-line-height: 1.75;
+        --cn-font: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+          "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
+          "Segoe UI Emoji";
+        --cn-font-accessible: "Atkinson Hyperlegible", var(--cn-font);
+      }
+
+      [data-bs-theme="dark"] {
+        --cn-bg: #0b1220;
+        --cn-surface: #0f172a;
+        --cn-text: #e5e7eb;
+        --cn-muted: #94a3b8;
+        --cn-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      }
+
+      [data-contrast="high"] {
+        --cn-primary: #0000ff;
+        --cn-accent: #00ff00;
+        --cn-warm: #ffff00;
+        --cn-danger: #ff0000;
+      }
+
+      html,
+      body {
+        background: var(--cn-bg);
+        color: var(--cn-text);
+        font-family: var(--cn-font);
+        line-height: var(--cn-line-height);
+      }
+
+      /* Skip link */
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: var(--cn-primary);
+        color: #fff;
+        padding: 0.5rem 1rem;
+        z-index: 2000;
+        border-radius: 0.5rem;
+      }
+      .skip-link:focus {
+        top: 0.5rem;
+        outline: var(--cn-focus);
+      }
+
+      /* Navbar */
+      .navbar {
+        backdrop-filter: saturate(1.2) blur(6px);
+        background: color-mix(in oklab, var(--cn-bg) 70%, transparent);
+        box-shadow: var(--cn-shadow);
+      }
+
+      /* Hero */
+      .hero-card {
+        border: 0;
+        border-radius: var(--cn-radius);
+        overflow: hidden;
+        box-shadow: var(--cn-shadow);
+        background: linear-gradient(
+            180deg,
+            rgba(37, 99, 235, 0.08),
+            transparent 40%
+          ),
+          var(--cn-surface);
+      }
+      .hero-img {
+        max-height: 420px;
+        object-fit: cover;
+      }
+
+      /* Cards */
+      .news-card {
+        border: 0;
+        border-radius: var(--cn-radius);
+        box-shadow: var(--cn-shadow);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        background: var(--cn-surface);
+      }
+      .news-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 40px rgba(2, 6, 23, 0.12);
+      }
+
+      .badge-cred {
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      .badge-cred[data-level="high"] {
+        background: color-mix(in srgb, var(--cn-accent) 85%, #fff 15%);
+      }
+      .badge-cred[data-level="medium"] {
+        background: color-mix(in srgb, var(--cn-warm) 85%, #fff 15%);
+      }
+      .badge-cred[data-level="low"] {
+        background: color-mix(in srgb, var(--cn-danger) 85%, #fff 15%);
+      }
+
+      /* Controls */
+      .control-pill {
+        border-radius: 999px;
+        box-shadow: var(--cn-shadow);
+        background: var(--cn-surface);
+      }
+
+      /* Reader modal */
+      .reader-content {
+        font-size: 1.125rem;
+        max-width: 70ch;
+        margin: 0 auto;
+      }
+      .reader-content[data-density="relaxed"] {
+        line-height: 1.95;
+        letter-spacing: 0.01em;
+      }
+      .reader-content[data-density="compact"] {
+        line-height: 1.55;
+      }
+      .progress-reader {
+        height: 6px;
+        border-radius: 999px;
+      }
+
+      /* Utilities */
+      .rounded-2xl {
+        border-radius: var(--cn-radius) !important;
+      }
+      .shadow-xl {
+        box-shadow: var(--cn-shadow) !important;
+      }
+      .focus-ring {
+        outline: none !important;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35) !important;
+      }
+
+      /* Accessibility: focus outlines */
+      *:focus-visible {
+        outline: var(--cn-focus);
+        outline-offset: 2px;
+        border-radius: 0.5rem;
+      }
+
+      /* Bookmark pin */
+      .pin {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        background: rgba(0, 0, 0, 0.55);
+        color: #fff;
+        border-radius: 999px;
+        padding: 0.35rem 0.5rem;
+        backdrop-filter: blur(3px);
+      }
+
+      /* Tooltips override readable */
+      .tooltip-inner {
+        text-align: left;
+      }
+
+      /* Density slider style */
+      .form-range::-webkit-slider-thumb {
+        background: var(--cn-primary);
+      }
+
+      /* Placeholder shimmer */
+      .shimmer {
+        position: relative;
+        overflow: hidden;
+      }
+      .shimmer::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        transform: translateX(-100%);
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.35),
+          transparent
+        );
+        animation: shimmer 1.2s infinite;
+      }
+      @keyframes shimmer {
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      /* Sticky sidebar */
+      @media (min-width: 992px) {
+        .sticky-lg-top-20 {
+          position: sticky;
+          top: 90px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg py-3" aria-label="Primary">
+      <div class="container">
+        <a
+          class="navbar-brand fw-bold d-flex align-items-center gap-2"
+          href="#"
+          aria-label="ClearNews Home"
+        >
+          <i class="bi bi-journal-richtext text-primary"></i>
+          <span>Clear<span class="text-primary">News</span></span>
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navMain"
+          aria-controls="navMain"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMain">
+          <form
+            class="d-flex ms-lg-4 my-3 my-lg-0 flex-grow-1"
+            role="search"
+            aria-label="Site search"
+          >
+            <div class="input-group shadow-sm">
+              <span class="input-group-text bg-transparent border-end-0"
+                ><i class="bi bi-search"></i
+              ></span>
+              <input
+                id="searchInput"
+                class="form-control border-start-0"
+                type="search"
+                placeholder="Search topics, sources, or tags… (e.g., climate, India, AI)"
+                aria-label="Search"
+              />
+              <button class="btn btn-primary" type="button" id="searchBtn">
+                Search
+              </button>
+            </div>
+          </form>
+
+          <ul class="navbar-nav ms-lg-4 align-items-lg-center gap-lg-2">
+            <li class="nav-item dropdown">
+              <button
+                class="btn btn-light control-pill dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Audience presets"
+              >
+                <i class="bi bi-people me-1"></i> Audience
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end shadow-xl rounded-2xl">
+                <li>
+                  <button class="dropdown-item" data-preset="student">
+                    Student
+                  </button>
+                </li>
+                <li>
+                  <button class="dropdown-item" data-preset="professional">
+                    Professional
+                  </button>
+                </li>
+                <li>
+                  <button class="dropdown-item" data-preset="elder">
+                    Elderly
+                  </button>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <button
+                class="btn btn-light control-pill dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Display options"
+              >
+                <i class="bi bi-sliders2-vertical me-1"></i> Display
+              </button>
+              <div
+                class="dropdown-menu dropdown-menu-end p-3 shadow-xl rounded-2xl"
+                style="min-width: 320px"
+              >
+                <div class="mb-2 small text-muted">Quick display controls</div>
+                <div
+                  class="d-flex align-items-center justify-content-between mb-3"
+                >
+                  <span><i class="bi bi-brightness-high me-2"></i> Theme</span>
+                  <div class="btn-group" role="group" aria-label="Theme toggle">
+                    <button
+                      class="btn btn-outline-secondary btn-sm"
+                      data-theme="light"
+                    >
+                      Light
+                    </button>
+                    <button
+                      class="btn btn-outline-secondary btn-sm"
+                      data-theme="dark"
+                    >
+                      Dark
+                    </button>
+                    <button
+                      class="btn btn-outline-secondary btn-sm"
+                      data-contrast="toggle"
+                    >
+                      High Contrast
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="d-flex align-items-center justify-content-between mb-3"
+                >
+                  <span><i class="bi bi-type me-2"></i> Font Size</span>
+                  <div class="btn-group" role="group" aria-label="Font size">
+                    <button
+                      class="btn btn-outline-secondary btn-sm"
+                      data-font="-"
+                    >
+                      A-
+                    </button>
+                    <button
+                      class="btn btn-outline-secondary btn-sm"
+                      data-font="0"
+                    >
+                      A
+                    </button>
+                    <button
+                      class="btn btn-outline-secondary btn-sm"
+                      data-font="+"
+                    >
+                      A+
+                    </button>
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <label for="densityRange" class="form-label"
+                    ><i class="bi bi-layout-text-window-reverse me-2"></i
+                    >Content Density</label
+                  >
+                  <input
+                    type="range"
+                    class="form-range"
+                    min="0"
+                    max="2"
+                    step="1"
+                    id="densityRange"
+                    aria-label="Content density"
+                  />
+                  <div class="d-flex justify-content-between small text-muted">
+                    <span>Compact</span><span>Comfort</span><span>Relaxed</span>
+                  </div>
+                </div>
+                <div class="form-check form-switch mt-2">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="dyslexiaFontSwitch"
+                  />
+                  <label class="form-check-label" for="dyslexiaFontSwitch"
+                    >Use accessible font</label
+                  >
+                </div>
+              </div>
+            </li>
+            <li class="nav-item">
+              <button
+                class="btn btn-primary control-pill"
+                data-bs-toggle="modal"
+                data-bs-target="#kbModal"
+                aria-label="Keyboard shortcuts"
+              >
+                <i class="bi bi-keyboard"></i>
+                <span class="d-none d-xl-inline">Shortcuts</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="container my-4" id="main">
+      <div class="row g-4">
+        <!-- Sidebar Filters -->
+        <aside class="col-lg-3">
+          <div
+            class="p-3 rounded-2xl shadow-xl"
+            style="background: var(--cn-surface)"
+          >
+            <h2 class="h5 mb-3">Refine Feed</h2>
+            <div class="mb-3">
+              <div class="small text-muted mb-2">Categories</div>
+              <div
+                class="d-flex flex-wrap gap-2"
+                id="categoryChips"
+                role="group"
+                aria-label="Categories"
+              >
+                <!-- chips injected by JS -->
+              </div>
+            </div>
+            <hr />
+            <div class="mb-3">
+              <div class="small text-muted mb-2">Credibility</div>
+              <div
+                class="btn-group w-100"
+                role="group"
+                aria-label="Credibility"
+              >
+                <button class="btn btn-outline-success btn-sm" data-cred="high">
+                  High
+                </button>
+                <button
+                  class="btn btn-outline-warning btn-sm"
+                  data-cred="medium"
+                >
+                  Med
+                </button>
+                <button class="btn btn-outline-danger btn-sm" data-cred="low">
+                  All
+                </button>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small text-muted"
+                >Reading time ≤ <span id="rtVal">10</span> min</label
+              >
+              <input
+                type="range"
+                class="form-range"
+                min="3"
+                max="20"
+                step="1"
+                id="rtRange"
+                aria-label="Reading time filter"
+              />
+            </div>
+            <div class="mb-3">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="factCheckOnly"
+                />
+                <label class="form-check-label" for="factCheckOnly"
+                  >Fact-checked only</label
+                >
+              </div>
+            </div>
+            <div class="mt-4">
+              <button id="resetFilters" class="btn btn-outline-secondary w-100">
+                Reset Filters
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="p-3 rounded-2xl shadow-xl mt-4 sticky-lg-top-20"
+            style="background: var(--cn-surface)"
+          >
+            <h2 class="h6">Trending on Google</h2>
+            <p class="small text-muted">Popular queries people search for:</p>
+            <ul class="list-unstyled" id="googleTrends">
+              <!-- injected by JS: illustrative topics from Google Search autocomplete style -->
+            </ul>
+          </div>
+        </aside>
+
+        <!-- Content -->
+        <section class="col-lg-9">
+          <div class="card hero-card mb-4">
+            <div class="row g-0 align-items-center">
+              <div class="col-md-6">
+                <img
+                  class="hero-img w-100"
+                  src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=1600&auto=format&fit=crop"
+                  alt="Newsroom with editors collaborating"
+                />
+              </div>
+              <div class="col-md-6 p-4 p-md-5">
+                <span
+                  class="badge rounded-pill bg-primary-subtle text-primary mb-2"
+                  >Featured</span
+                >
+                <h1 class="h3 fw-bold">
+                  Today’s Brief: Clear, Credible, and Crafted for You
+                </h1>
+                <p class="mb-3 text-muted">
+                  A calm, ad-light reading experience that adapts to your
+                  needs—better typography, smarter filters, and transparent
+                  sourcing.
+                </p>
+                <div class="d-flex gap-2 align-items-center mb-3">
+                  <span
+                    class="badge badge-cred"
+                    data-level="high"
+                    aria-label="High credibility"
+                    >High credibility</span
+                  >
+                  <span class="badge text-bg-light"
+                    ><i class="bi bi-clock me-1"></i>6 min read</span
+                  >
+                  <span class="badge text-bg-light"
+                    ><i class="bi bi-people me-1"></i>For all audiences</span
+                  >
+                </div>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-primary" id="openFeatured">
+                    Read Featured
+                  </button>
+                  <button class="btn btn-outline-primary" id="saveFeatured">
+                    <i class="bi bi-bookmark me-1"></i>Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h2 class="h5 m-0">Top Stories</h2>
+            <div class="small text-muted" id="resultsCount">0 articles</div>
+          </div>
+
+          <div id="feed" class="row g-4" aria-live="polite" aria-busy="true">
+            <!-- News cards injected by JS -->
+          </div>
+
+          <div class="text-center mt-4">
+            <button class="btn btn-outline-secondary px-4" id="loadMore">
+              <i class="bi bi-arrow-repeat me-1"></i>Load more
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Reader Modal -->
+    <div
+      class="modal fade"
+      id="readerModal"
+      tabindex="-1"
+      aria-labelledby="readerTitle"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-fullscreen-md-down modal-lg modal-dialog-scrollable"
+      >
+        <div class="modal-content rounded-2xl">
+          <div class="modal-header">
+            <h3 class="modal-title h5" id="readerTitle">Article</h3>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="progress progress-reader mb-3">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                style="width: 0%"
+                id="readerProgress"
+                aria-label="Reading progress"
+              ></div>
+            </div>
+            <div class="d-flex flex-wrap gap-2 mb-3">
+              <span class="badge text-bg-light" id="readerMeta"></span>
+              <span class="badge badge-cred" id="readerCred"></span>
+              <button
+                class="btn btn-sm btn-outline-secondary"
+                id="readerFontInc"
+                aria-label="Increase font size"
+              >
+                A+
+              </button>
+              <button
+                class="btn btn-sm btn-outline-secondary"
+                id="readerFontDec"
+                aria-label="Decrease font size"
+              >
+                A-
+              </button>
+              <div
+                class="btn-group btn-group-sm"
+                role="group"
+                aria-label="Reader density"
+              >
+                <button
+                  class="btn btn-outline-secondary"
+                  data-density="compact"
+                >
+                  Compact
+                </button>
+                <button
+                  class="btn btn-outline-secondary active"
+                  data-density="comfort"
+                >
+                  Comfort
+                </button>
+                <button
+                  class="btn btn-outline-secondary"
+                  data-density="relaxed"
+                >
+                  Relaxed
+                </button>
+              </div>
+              <button class="btn btn-sm btn-outline-primary" id="readerSave">
+                <i class="bi bi-bookmark me-1"></i>Save
+              </button>
+            </div>
+            <article
+              id="readerBody"
+              class="reader-content"
+              data-density="comfort"
+            ></article>
+            <hr />
+            <details class="mt-3">
+              <summary class="fw-semibold">
+                Why we consider this credible
+              </summary>
+              <ul class="mt-2" id="readerWhy"></ul>
+            </details>
+            <div class="mt-3">
+              <div class="small text-muted">Sources</div>
+              <ul id="readerSources" class="small"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div
+      class="modal fade"
+      id="kbModal"
+      tabindex="-1"
+      aria-labelledby="kbTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content rounded-2xl">
+          <div class="modal-header">
+            <h3 class="modal-title h5" id="kbTitle">Keyboard shortcuts</h3>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <ul class="list-group">
+              <li class="list-group-item"><kbd>/</kbd> Focus search</li>
+              <li class="list-group-item"><kbd>?</kbd> Open this help</li>
+              <li class="list-group-item">
+                <kbd>j</kbd>/<kbd>k</kbd> Move between articles
+              </li>
+              <li class="list-group-item">
+                <kbd>o</kbd> Open selected article
+              </li>
+              <li class="list-group-item">
+                <kbd>b</kbd> Bookmark selected article
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast container -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+      <div
+        id="toaster"
+        class="toast align-items-center text-bg-dark border-0"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body">Saved to bookmarks</div>
+          <button
+            type="button"
+            class="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="container py-5 border-top">
+      <div class="row g-4">
+        <div class="col-md-8">
+          <h4 class="fw-bold">Our Accessibility & Trust Pledge</h4>
+          <p class="text-muted m-0">
+            We design for inclusivity: readable typography, adjustable density,
+            dyslexia-friendly fonts, keyboard navigation, and high-contrast
+            themes. We explain why a story is credible and surface sources
+            prominently.
+          </p>
+        </div>
+        <div class="col-md-4 text-md-end">
+          <button class="btn btn-outline-secondary" id="viewBookmarks">
+            <i class="bi bi-bookmarks me-1"></i> View bookmarks
+          </button>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Single-file App JS -->
+    <script>
+      // =====================
+      // Demo data & utilities
+      // =====================
+      const CATEGORIES = [
+        "Top",
+        "India",
+        "World",
+        "Business",
+        "Tech",
+        "Science",
+        "Health",
+        "Sports",
+        "Entertainment",
+        "Climate",
+      ];
+
+      // Illustrative queries inspired by Google Search autocomplete/trends style (static for demo)
+      const GOOGLE_QUERIES = [
+        "india monsoon update today",
+        "stock market news today",
+        "ai safety latest",
+        "champions league fixtures",
+        "ipl points table",
+        "tech layoffs 2025",
+        "climate change report",
+        "gold rate today",
+        "usd inr exchange rate",
+        "covid booster guidelines",
+      ];
+
+      // Mock stories: In production, fetch from your backend which aggregates reputable sources (e.g., Reuters, AP, BBC).
+      const MOCK_STORIES = Array.from({ length: 24 }).map((_, i) => ({
+        id: i + 1,
+        title: [
+          "Government unveils new education policy focus on digital equity",
+          "Breakthrough in AI model compression cuts energy use",
+          "Monsoon brings relief to North India, IMD issues advisory",
+          "Markets steady as inflation eases; RBI outlook in focus",
+          "Study shows coral reefs rebounding in protected zones",
+          "New cyber law proposes stronger privacy safeguards",
+          "Researchers map urban heat islands across major cities",
+          "Startup launches affordable satellite internet service",
+          "Healthcare access improves with telemedicine push",
+          "Wildlife corridors reduce human-animal conflict",
+          "Space agency schedules next lunar mission window",
+          "Tech giants back open-source security initiative",
+          "Local trains add women-only coaches during peak hours",
+          "Farmers adopt smart irrigation; water use drops",
+          "Clean energy investments hit record high",
+          "Data protection board releases compliance toolkit",
+          "Education loans: new subsidized scheme announced",
+          "Scientists track microplastics in major rivers",
+          "Public transport card rolls out nationwide",
+          "Green hydrogen pilot shows promising results",
+          "Severe weather alerts: states on preparedness",
+          "Major sports event adopts concussion protocol",
+          "Libraries reimagined as digital learning hubs",
+          "Researchers publish AI ethics benchmark",
+        ][i],
+        source: [
+          "Reuters",
+          "BBC",
+          "The Hindu",
+          "Indian Express",
+          "AP",
+          "Mint",
+          "NDTV",
+          "Bloomberg",
+          "The Verge",
+          "Nature",
+        ][i % 10],
+        img: `https://picsum.photos/seed/${i + 11}/800/500`,
+        minutes: 4 + (i % 12),
+        credibility: [
+          "high",
+          "high",
+          "medium",
+          "high",
+          "high",
+          "medium",
+          "high",
+          "medium",
+          "high",
+          "high",
+        ][i % 10],
+        category: CATEGORIES[(i % (CATEGORIES.length - 1)) + 1],
+        factChecked: i % 3 !== 0,
+        published: new Date(Date.now() - i * 3600 * 1000).toISOString(),
+        summary:
+          "This is a concise, readable summary highlighting the core facts first, then adding context and quotes. Ideal for skimming.",
+        body: `\n<p><strong>Lead:</strong> The story opens with the most verifiable facts, then explains the context in plain language. Bullet points summarize key takeaways for quick scanning.</p>\n<ul>\n  <li>What happened: verifiable event with time and place.</li>\n  <li>Why it matters: impact on readers and society.</li>\n  <li>What’s next: upcoming decisions, dates, or data releases.</li>\n</ul>\n<p>Quotes are attributed, data sources are linked, and any uncertainty or limitations are clearly labeled. Jargon is minimized, acronyms are expanded on first use, and numbers are rounded for clarity. Charts and images include descriptive alt text.</p>\n<p class='mb-0'>Our <em>Transparency Box</em> explains methods and provides links to full datasets when available.</p>`,
+        whyCredible: [
+          "Source has a track record of factual reporting and corrections.",
+          "Multiple independent confirmations included.",
+          "Direct links to primary documents and data.",
+          "Clearly separates news from opinion.",
+        ],
+        sources: [
+          "Official press release / gov portal",
+          "Dataset / PDF from a reputable institution",
+          "Eyewitness or expert interview transcript",
+        ],
+      }));
+
+      // State
+      const state = {
+        theme:
+          localStorage.getItem("cn-theme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light"),
+        highContrast: localStorage.getItem("cn-contrast") === "1",
+        fontScale: parseFloat(localStorage.getItem("cn-font-scale") || "1"),
+        density: localStorage.getItem("cn-density") || "comfort",
+        accessibleFont: localStorage.getItem("cn-accessible-font") === "1",
+        filters: {
+          q: "",
+          category: "Top",
+          cred: "low",
+          maxMinutes: 10,
+          factOnly: false,
+        },
+        cursorIndex: 0,
+        page: 1,
+        pageSize: 8,
+        bookmarks: JSON.parse(localStorage.getItem("cn-bookmarks") || "[]"),
+      };
+
+      // Apply initial UI preferences
+      function applyPrefs() {
+        document.documentElement.setAttribute("data-bs-theme", state.theme);
+        document.documentElement.setAttribute(
+          "data-contrast",
+          state.highContrast ? "high" : ""
+        );
+        document.body.style.fontSize = state.fontScale.toFixed(2) + "rem";
+        document.body.style.fontFamily = state.accessibleFont
+          ? "var(--cn-font-accessible)"
+          : "var(--cn-font)";
+      }
+
+      // Build category chips and Google list
+      function buildSidebar() {
+        const chipWrap = document.getElementById("categoryChips");
+        chipWrap.innerHTML = "";
+        CATEGORIES.forEach((cat) => {
+          const btn = document.createElement("button");
+          btn.className =
+            "btn btn-sm " +
+            (state.filters.category === cat
+              ? "btn-primary"
+              : "btn-outline-primary");
+          btn.textContent = cat;
+          btn.setAttribute("data-cat", cat);
+          btn.addEventListener("click", () => {
+            state.filters.category = cat;
+            renderFeed(true);
+          });
+          chipWrap.appendChild(btn);
+        });
+
+        const gList = document.getElementById("googleTrends");
+        gList.innerHTML = "";
+        GOOGLE_QUERIES.forEach((q) => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = "#";
+          a.className = "link-underline-opacity-0 link-underline";
+          a.textContent = q;
+          a.addEventListener("click", () => {
+            document.getElementById("searchInput").value = q;
+            state.filters.q = q;
+            renderFeed(true);
+          });
+          li.appendChild(a);
+          gList.appendChild(li);
+        });
+      }
+
+      // Filter stories
+      function getFiltered() {
+        const start = 0; // always from beginning for counts
+        let items = MOCK_STORIES.slice(start);
+        const q = state.filters.q.toLowerCase();
+        if (q) {
+          items = items.filter((s) =>
+            (s.title + " " + s.summary + " " + s.category + " " + s.source)
+              .toLowerCase()
+              .includes(q)
+          );
+        }
+        if (state.filters.category && state.filters.category !== "Top") {
+          items = items.filter((s) => s.category === state.filters.category);
+        }
+        if (state.filters.cred === "high") {
+          items = items.filter((s) => s.credibility === "high");
+        }
+        if (state.filters.maxMinutes) {
+          items = items.filter((s) => s.minutes <= state.filters.maxMinutes);
+        }
+        if (state.filters.factOnly) {
+          items = items.filter((s) => s.factChecked);
+        }
+        return items;
+      }
+
+      // Render feed
+      function renderFeed(reset = false) {
+        const feed = document.getElementById("feed");
+        const countEl = document.getElementById("resultsCount");
+        const list = getFiltered();
+        countEl.textContent = `${list.length} article${
+          list.length !== 1 ? "s" : ""
+        }`;
+
+        if (reset) {
+          state.page = 1;
+          feed.innerHTML = "";
+        }
+
+        // skeletons
+        feed.setAttribute("aria-busy", "true");
+        const show = list.slice(0, state.page * state.pageSize);
+        if (reset) {
+          for (let i = 0; i < Math.min(6, state.pageSize); i++) {
+            const skel = document.createElement("div");
+            skel.className = "col-md-6 col-xl-4";
+            skel.innerHTML = `<div class='news-card shimmer' style='height:280px'></div>`;
+            feed.appendChild(skel);
+          }
+        }
+
+        setTimeout(() => {
+          feed.innerHTML = "";
+          show.forEach((s, idx) => feed.appendChild(cardTemplate(s, idx)));
+          feed.removeAttribute("aria-busy");
+        }, 350);
+      }
+
+      // Card template
+      function cardTemplate(s, idx) {
+        const col = document.createElement("div");
+        col.className = "col-md-6 col-xl-4";
+        col.setAttribute("data-index", idx);
+        const saved = state.bookmarks.includes(s.id);
+        col.innerHTML = `
+      <div class="card news-card h-100 position-relative" role="article" aria-labelledby="title-${
+        s.id
+      }">
+        <button class="btn btn-sm pin" title="Bookmark" data-action="bookmark" aria-pressed="${saved}" aria-label="Bookmark article ${
+          s.title
+        }"><i class="bi ${
+          saved ? "bi-bookmark-fill" : "bi-bookmark"
+        }"></i></button>
+        <img src="${s.img}" class="card-img-top" alt="Thumbnail for ${s.title}">
+        <div class="card-body d-flex flex-column">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="badge text-bg-light"><i class="bi bi-newspaper me-1"></i>${
+              s.source
+            }</span>
+            <span class="badge badge-cred" data-level="${s.credibility}">${
+          s.credibility.charAt(0).toUpperCase() + s.credibility.slice(1)
+        }</span>
+          </div>
+          <h3 class="h6 fw-bold" id="title-${s.id}">${s.title}</h3>
+          <p class="text-muted small flex-grow-1">${s.summary}</p>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <span class="small text-muted"><i class="bi bi-clock me-1"></i>${
+              s.minutes
+            } min</span>
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn btn-sm btn-primary" data-action="open" data-id="${
+                s.id
+              }">Read</button>
+              <button class="btn btn-sm btn-outline-secondary" data-action="share" data-id="${
+                s.id
+              }"><i class="bi bi-share"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+
+        // Wire actions
+        col
+          .querySelector('[data-action="open"]')
+          .addEventListener("click", () => openReader(s));
+        col
+          .querySelector('[data-action="share"]')
+          .addEventListener("click", () => shareStory(s));
+        col
+          .querySelector('[data-action="bookmark"]')
+          .addEventListener("click", (e) => toggleBookmark(e, s));
+        return col;
+      }
+
+      // Reader
+      const readerModal = new bootstrap.Modal("#readerModal");
+      function openReader(s) {
+        document.getElementById("readerTitle").textContent = s.title;
+        document.getElementById("readerMeta").textContent = `${
+          s.source
+        } • ${Math.max(
+          1,
+          Math.round((Date.now() - new Date(s.published)) / 3600000)
+        )}h ago • ${s.minutes} min`;
+        const cred = document.getElementById("readerCred");
+        cred.textContent = `${s.credibility} credibility`;
+        cred.setAttribute("data-level", s.credibility);
+
+        const body = document.getElementById("readerBody");
+        body.innerHTML =
+          `<figure class='mb-3'><img src='${s.img}' alt='Related image' class='img-fluid rounded-2xl shadow-xl'><figcaption class='small text-muted mt-1'>Image for context only.</figcaption></figure>` +
+          s.body;
+
+        const why = document.getElementById("readerWhy");
+        why.innerHTML = s.whyCredible.map((x) => `<li>${x}</li>`).join("");
+
+        const src = document.getElementById("readerSources");
+        src.innerHTML = s.sources.map((x) => `<li>${x}</li>`).join("");
+
+        body.style.fontSize = (1 * state.fontScale).toFixed(2) + "rem";
+        body.setAttribute("data-density", state.density);
+        document.getElementById("readerProgress").style.width = "0%";
+
+        // Save action
+        document.getElementById("readerSave").onclick = () => {
+          saveBookmark(s.id);
+          toast("Saved to bookmarks");
+        };
+
+        // Scroll progress
+        const modalBody = document.querySelector("#readerModal .modal-body");
+        modalBody.onscroll = () => {
+          const p =
+            modalBody.scrollTop /
+            (modalBody.scrollHeight - modalBody.clientHeight);
+          document.getElementById("readerProgress").style.width =
+            (p * 100).toFixed(0) + "%";
+        };
+
+        readerModal.show();
+      }
+
+      // Share (Web Share API fallback)
+      function shareStory(s) {
+        const shareData = {
+          title: s.title,
+          text: s.summary,
+          url: location.href.split("#")[0] + `#story-${s.id}`,
+        };
+        if (navigator.share) {
+          navigator.share(shareData).catch(() => {});
+        } else {
+          navigator.clipboard.writeText(`${s.title} — ${shareData.url}`);
+          toast("Link copied to clipboard");
+        }
+      }
+
+      // Bookmarks
+      function saveBookmark(id) {
+        if (!state.bookmarks.includes(id)) {
+          state.bookmarks.push(id);
+          localStorage.setItem("cn-bookmarks", JSON.stringify(state.bookmarks));
+        }
+      }
+      function removeBookmark(id) {
+        state.bookmarks = state.bookmarks.filter((x) => x !== id);
+        localStorage.setItem("cn-bookmarks", JSON.stringify(state.bookmarks));
+      }
+      function toggleBookmark(e, s) {
+        const icon = e.currentTarget.querySelector("i");
+        if (state.bookmarks.includes(s.id)) {
+          removeBookmark(s.id);
+          icon.className = "bi bi-bookmark";
+          e.currentTarget.setAttribute("aria-pressed", "false");
+          toast("Removed from bookmarks");
+        } else {
+          saveBookmark(s.id);
+          icon.className = "bi bi-bookmark-fill";
+          e.currentTarget.setAttribute("aria-pressed", "true");
+          toast("Saved to bookmarks");
+        }
+      }
+
+      // Toast helper
+      function toast(msg) {
+        const el = document.getElementById("toaster");
+        el.querySelector(".toast-body").textContent = msg;
+        new bootstrap.Toast(el).show();
+      }
+
+      // Presets
+      const PRESETS = {
+        student: {
+          fontScale: 1,
+          density: "comfort",
+          theme: "light",
+          maxMinutes: 8,
+        },
+        professional: {
+          fontScale: 0.95,
+          density: "compact",
+          theme: "light",
+          maxMinutes: 10,
+        },
+        elder: {
+          fontScale: 1.15,
+          density: "relaxed",
+          theme: "light",
+          maxMinutes: 12,
+          accessibleFont: true,
+        },
+      };
+
+      function applyPreset(name) {
+        const p = PRESETS[name];
+        if (!p) return;
+        Object.assign(state, p, {
+          filters: { ...state.filters, maxMinutes: p.maxMinutes },
+        });
+        state.accessibleFont = !!p.accessibleFont;
+        persistPrefs();
+        applyPrefs();
+        document.getElementById("rtRange").value = state.filters.maxMinutes;
+        document.getElementById("rtVal").textContent = state.filters.maxMinutes;
+        renderFeed(true);
+      }
+
+      // Persist preferences
+      function persistPrefs() {
+        localStorage.setItem("cn-theme", state.theme);
+        localStorage.setItem("cn-contrast", state.highContrast ? "1" : "");
+        localStorage.setItem("cn-font-scale", String(state.fontScale));
+        localStorage.setItem("cn-density", state.density);
+        localStorage.setItem(
+          "cn-accessible-font",
+          state.accessibleFont ? "1" : ""
+        );
+      }
+
+      // Keyboard shortcuts
+      function setupKeyboard() {
+        window.addEventListener("keydown", (e) => {
+          if (e.key === "/" && document.activeElement.tagName !== "INPUT") {
+            e.preventDefault();
+            document.getElementById("searchInput").focus();
+          }
+          if (e.key === "?") {
+            const kb = new bootstrap.Modal("#kbModal");
+            kb.show();
+          }
+          const cards = Array.from(
+            document.querySelectorAll('#feed [role="article"]')
+          );
+          if (["j", "k", "o", "b"].includes(e.key) && cards.length) {
+            const max = cards.length - 1;
+            if (e.key === "j") {
+              state.cursorIndex = Math.min(max, state.cursorIndex + 1);
+              cards[state.cursorIndex].scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+              highlightCard(cards[state.cursorIndex]);
+            }
+            if (e.key === "k") {
+              state.cursorIndex = Math.max(0, state.cursorIndex - 1);
+              cards[state.cursorIndex].scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+              highlightCard(cards[state.cursorIndex]);
+            }
+            if (e.key === "o") {
+              cards[state.cursorIndex]
+                .querySelector('[data-action="open"]')
+                .click();
+            }
+            if (e.key === "b") {
+              cards[state.cursorIndex]
+                .querySelector('[data-action="bookmark"]')
+                .click();
+            }
+          }
+        });
+      }
+      function highlightCard(el) {
+        cardsClearHighlight();
+        el.classList.add("border", "border-primary", "shadow");
+        setTimeout(() => {
+          el.classList.remove("border", "border-primary", "shadow");
+        }, 600);
+      }
+      function cardsClearHighlight() {
+        document
+          .querySelectorAll('#feed [role="article"]')
+          .forEach((el) =>
+            el.classList.remove("border", "border-primary", "shadow")
+          );
+      }
+
+      // Event wiring
+      function wireUI() {
+        document
+          .querySelectorAll("[data-preset]")
+          .forEach((btn) =>
+            btn.addEventListener("click", () => applyPreset(btn.dataset.preset))
+          );
+        document.querySelectorAll("[data-theme]").forEach((btn) =>
+          btn.addEventListener("click", () => {
+            state.theme = btn.dataset.theme;
+            persistPrefs();
+            applyPrefs();
+          })
+        );
+        document.querySelectorAll("[data-contrast]").forEach((btn) =>
+          btn.addEventListener("click", () => {
+            state.highContrast = !state.highContrast;
+            persistPrefs();
+            applyPrefs();
+          })
+        );
+        document.querySelectorAll("[data-font]").forEach((btn) =>
+          btn.addEventListener("click", () => {
+            const v = btn.dataset.font;
+            if (v === "0") state.fontScale = 1;
+            if (v === "+")
+              state.fontScale = Math.min(1.3, state.fontScale + 0.05);
+            if (v === "-")
+              state.fontScale = Math.max(0.85, state.fontScale - 0.05);
+            persistPrefs();
+            applyPrefs();
+          })
+        );
+
+        document
+          .getElementById("densityRange")
+          .addEventListener("input", (e) => {
+            state.density =
+              ["compact", "comfort", "relaxed"][parseInt(e.target.value, 10)] ||
+              "comfort";
+            persistPrefs();
+            document
+              .querySelectorAll(".reader-content")
+              .forEach((el) => el.setAttribute("data-density", state.density));
+          });
+
+        document
+          .getElementById("dyslexiaFontSwitch")
+          .addEventListener("change", (e) => {
+            state.accessibleFont = e.target.checked;
+            persistPrefs();
+            applyPrefs();
+          });
+
+        document.getElementById("searchBtn").addEventListener("click", () => {
+          state.filters.q = document.getElementById("searchInput").value.trim();
+          renderFeed(true);
+        });
+        document
+          .getElementById("searchInput")
+          .addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              state.filters.q = e.target.value.trim();
+              renderFeed(true);
+            }
+          });
+
+        document.querySelectorAll("[data-cred]").forEach((btn) =>
+          btn.addEventListener("click", () => {
+            state.filters.cred = btn.dataset.cred;
+            renderFeed(true);
+          })
+        );
+        document.getElementById("rtRange").addEventListener("input", (e) => {
+          state.filters.maxMinutes = parseInt(e.target.value, 10);
+          document.getElementById("rtVal").textContent =
+            state.filters.maxMinutes;
+        });
+        document
+          .getElementById("rtRange")
+          .addEventListener("change", () => renderFeed(true));
+        document
+          .getElementById("factCheckOnly")
+          .addEventListener("change", (e) => {
+            state.filters.factOnly = e.target.checked;
+            renderFeed(true);
+          });
+
+        document
+          .getElementById("resetFilters")
+          .addEventListener("click", () => {
+            state.filters = {
+              q: "",
+              category: "Top",
+              cred: "low",
+              maxMinutes: 10,
+              factOnly: false,
+            };
+            document.getElementById("searchInput").value = "";
+            document.getElementById("rtRange").value = 10;
+            document.getElementById("rtVal").textContent = 10;
+            document.getElementById("factCheckOnly").checked = false;
+            renderFeed(true);
+          });
+
+        document.getElementById("loadMore").addEventListener("click", () => {
+          state.page++;
+          renderFeed(false);
+        });
+
+        // Featured actions
+        document
+          .getElementById("openFeatured")
+          .addEventListener("click", () => openReader(MOCK_STORIES[0]));
+        document
+          .getElementById("saveFeatured")
+          .addEventListener("click", () => {
+            saveBookmark(MOCK_STORIES[0].id);
+            toast("Saved to bookmarks");
+          });
+
+        // Reader font adjust
+        document
+          .getElementById("readerFontInc")
+          .addEventListener("click", () => {
+            const el = document.getElementById("readerBody");
+            const s = parseFloat(getComputedStyle(el).fontSize);
+            el.style.fontSize = s + 1 + "px";
+          });
+        document
+          .getElementById("readerFontDec")
+          .addEventListener("click", () => {
+            const el = document.getElementById("readerBody");
+            const s = parseFloat(getComputedStyle(el).fontSize);
+            el.style.fontSize = Math.max(14, s - 1) + "px";
+          });
+
+        document.querySelectorAll("[data-density]").forEach((btn) =>
+          btn.addEventListener("click", () => {
+            document
+              .getElementById("readerBody")
+              .setAttribute("data-density", btn.dataset.density);
+          })
+        );
+
+        // Bookmarks view
+        document
+          .getElementById("viewBookmarks")
+          .addEventListener("click", () => {
+            const items = MOCK_STORIES.filter((s) =>
+              state.bookmarks.includes(s.id)
+            );
+            if (!items.length) {
+              toast("No bookmarks yet");
+              return;
+            }
+            const first = items[0];
+            openReader(first);
+            document
+              .getElementById("readerWhy")
+              .insertAdjacentHTML(
+                "beforebegin",
+                `<div class='alert alert-info rounded-2xl'><i class='bi bi-bookmarks me-2'></i>You have ${
+                  items.length
+                } bookmarked article${
+                  items.length > 1 ? "s" : ""
+                }. Use <kbd>j</kbd>/<kbd>k</kbd> to browse the list on the homepage.</div>`
+              );
+          });
+      }
+
+      // Init
+      (function init() {
+        // Prefs
+        applyPrefs();
+        // Sidebar
+        buildSidebar();
+        // Filters UI
+        document.getElementById("rtRange").value = state.filters.maxMinutes;
+        document.getElementById("rtVal").textContent = state.filters.maxMinutes;
+        document.getElementById("dyslexiaFontSwitch").checked =
+          state.accessibleFont;
+        // Render
+        renderFeed(true);
+        // Wire UI
+        wireUI();
+        // Keyboard
+        setupKeyboard();
+      })();
+    </script>
+  </body>
+</html>
