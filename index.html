@@ -96,6 +96,10 @@
         border-radius: 999px;
         font-weight: 600;
       }
+      .navbar-brand .logo-icon {
+        font-size: 1.5rem;
+        color: var(--cn-primary);
+      }
 
       .main-container {
         max-width: 1400px;
@@ -170,7 +174,8 @@
       }
 
       .myth-card,
-      .explainer-card {
+      .explainer-card,
+      .source-card {
         background: var(--cn-surface);
         border: 1px solid
           color-mix(in oklab, var(--cn-surface) 80%, var(--cn-muted));
@@ -179,7 +184,8 @@
         transition: transform 0.2s ease, box-shadow 0.2s ease;
       }
       .myth-card:hover,
-      .explainer-card:hover {
+      .explainer-card:hover,
+      .source-card:hover {
         transform: translateY(-3px);
         box-shadow: 0 14px 40px rgba(2, 6, 23, 0.12);
       }
@@ -201,7 +207,8 @@
         color: white;
       }
 
-      .explainer-label {
+      .explainer-label,
+      .source-label {
         font-weight: 700;
         padding: 0.3em 0.7em;
         border-radius: 0.5rem;
@@ -295,7 +302,6 @@
         }
       }
 
-      /* New Modal Styles for Myth Busters and Explainers */
       .custom-modal-header {
         background: var(--cn-surface);
         border-bottom: none;
@@ -322,6 +328,10 @@
         border-radius: var(--cn-radius);
         box-shadow: var(--cn-shadow);
       }
+
+      .footer-logo {
+        color: var(--cn-primary) !important;
+      }
     </style>
   </head>
   <body>
@@ -334,7 +344,7 @@
           href="#"
           aria-label="The Sift Home"
         >
-          <i class="bi bi-journal-richtext text-primary"></i>
+          <i class="bi bi-funnel-fill logo-icon"></i>
           <span>The <span class="text-primary">Sift</span></span>
         </a>
 
@@ -848,6 +858,95 @@
               </div>
             </div>
           </section>
+
+          <hr class="my-5" />
+
+          <section class="mb-5">
+            <h2 class="h4 mb-4 fw-bold">
+              Source Spotlight
+              <i class="bi bi-patch-question-fill text-primary"></i>
+            </h2>
+            <p class="text-muted">
+              A guide to understanding news sources and media literacy.
+            </p>
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="source-card p-4 h-100 d-flex flex-column">
+                  <span class="source-label mb-3"
+                    ><i class="bi bi-journal-text"></i>PROFILE</span
+                  >
+                  <h3 class="h5 fw-bold text-primary">
+                    Reuters: A Global, Fact-Based Approach
+                  </h3>
+                  <p class="text-muted flex-grow-1">
+                    Learn about Reuters' century-long history, its commitment to
+                    neutral, objective reporting, and its role as a wire service
+                    for other news outlets.
+                  </p>
+                  <div class="mt-auto">
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#sourceModal"
+                      data-source-id="1"
+                    >
+                      View Profile <i class="bi bi-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="source-card p-4 h-100 d-flex flex-column">
+                  <span class="source-label mb-3"
+                    ><i class="bi bi-journal-text"></i>GUIDE</span
+                  >
+                  <h3 class="h5 fw-bold text-primary">
+                    How to Spot Misleading Headlines
+                  </h3>
+                  <p class="text-muted flex-grow-1">
+                    A quick guide to identifying headlines designed to grab
+                    attention rather than inform. Learn to differentiate between
+                    clickbait and factual reporting.
+                  </p>
+                  <div class="mt-auto">
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#sourceModal"
+                      data-source-id="2"
+                    >
+                      Read Guide <i class="bi bi-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="source-card p-4 h-100 d-flex flex-column">
+                  <span class="source-label mb-3"
+                    ><i class="bi bi-journal-text"></i>PROFILE</span
+                  >
+                  <h3 class="h5 fw-bold text-primary">
+                    The Verge: Tech News with a Human Touch
+                  </h3>
+                  <p class="text-muted flex-grow-1">
+                    Discover how The Verge balances in-depth tech analysis with
+                    cultural commentary, and what its focus on the intersection
+                    of tech and society means for its content.
+                  </p>
+                  <div class="mt-auto">
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#sourceModal"
+                      data-source-id="3"
+                    >
+                      View Profile <i class="bi bi-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </section>
       </div>
     </main>
@@ -1004,6 +1103,33 @@
 
     <div
       class="modal fade"
+      id="sourceModal"
+      tabindex="-1"
+      aria-labelledby="sourceModalTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content custom-modal-content">
+          <div class="modal-header custom-modal-header">
+            <h5 class="custom-modal-title" id="sourceModalTitle">
+              <i class="bi bi-journal-text text-primary"></i> Source Spotlight
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body custom-modal-body">
+            <div id="sourceModalContent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
       id="kbModal"
       tabindex="-1"
       aria-labelledby="kbTitle"
@@ -1062,7 +1188,7 @@
     <footer class="container main-container py-5 border-top">
       <div class="row g-4 justify-content-center">
         <div class="col-md-5">
-          <h4 class="fw-bold">The Sift</h4>
+          <h4 class="fw-bold"><span class="footer-logo">The Sift</span></h4>
           <p class="text-muted m-0">
             A trusted source for clear, credible news, designed for everyone.
           </p>
@@ -1151,7 +1277,7 @@
         1: {
           title: "Organic food is always healthier.",
           body: `
-            <p><strong>Fact:</strong> The term "organic" primarily refers to how food is grown, not necessarily its nutritional content. Organic farming avoids synthetic pesticides and fertilizers, which is beneficial for the environment, but doesn't guarantee higher vitamin or mineral levels. Multiple studies have shown the nutritional differences between organic and conventional produce are minimal. The healthiest diet is one rich in fruits, vegetables, and whole grains, regardless of whether they are organic.</p>
+            <p><strong>Fact:</strong> The term "organic" primarily refers to how food is grown, not its nutritional content. Organic farming avoids synthetic pesticides and fertilizers, which is beneficial for the environment, but doesn't guarantee higher vitamin or mineral levels. Multiple studies have shown the nutritional differences between organic and conventional produce are minimal. The healthiest diet is one rich in fruits, vegetables, and whole grains, regardless of whether they are organic.</p>
             <p><strong>Deeper Dive:</strong> While some studies have found small increases in certain nutrients in organic produce, these are often not significant enough to impact human health. The primary benefits of organic farming are often environmental, such as promoting biodiversity and reducing exposure to certain chemicals. For human health, the most important factor is the quantity and variety of fruits and vegetables consumed, not just the label.</p>
             <p class="small text-muted mt-3"><strong>Sources:</strong></p>
             <ul>
@@ -1272,7 +1398,62 @@
         },
       };
 
-      const MOCK_STORIES = Array.from({ length: 100 }).map((_, i) => ({
+      const SOURCES = {
+        1: {
+          title: "Reuters: A Global, Fact-Based Approach",
+          body: `
+            <p><strong>Profile:</strong> Reuters is one of the world's largest and most respected international news agencies. Its core business is providing breaking news, in-depth reports, and multimedia content to other news organizations and financial markets worldwide.</p>
+            <p><strong>Key Characteristics:</strong></p>
+            <ul>
+              <li><strong>Journalistic Standards:</strong> Known for its commitment to speed, accuracy, and impartiality. Reuters has a strict editorial policy that prohibits its journalists from expressing personal opinions on public issues.</li>
+              <li><strong>Ownership:</strong> Part of Thomson Reuters, a multinational media and information company. Its ownership structure is designed to protect its journalistic independence.</li>
+              <li><strong>Political Leanings:</strong> Widely regarded as a neutral and objective source. It's often used as a benchmark for factual reporting.</li>
+            </ul>
+            <p class="small text-muted mt-3"><strong>Sources:</strong></p>
+            <ul>
+              <li><a href="#" class="link-primary">Reuters Editorial Handbook</a></li>
+              <li><a href="#" class="link-primary">Pew Research Center analysis on media bias</a></li>
+            </ul>
+          `,
+        },
+        2: {
+          title: "How to Spot Misleading Headlines",
+          body: `
+            <p><strong>Misleading headlines</strong> are designed to sensationalize a story or provoke a strong emotional reaction, often by taking quotes or facts out of context. Here’s how to spot them:</p>
+            <p><strong>What to Look For:</strong></p>
+            <ul>
+              <li><strong>Emotional Language:</strong> Headlines that use words like "shocking," "outrageous," or "unbelievable."</li>
+              <li><strong>Vague or Ambiguous Claims:</strong> Headlines that make broad statements without providing specific details.</li>
+              <li><strong>Clickbait:</strong> Headlines that promise a big reveal or secret but fail to deliver, forcing you to click through to an article that doesn't live up to the hype.</li>
+              <li><strong>Taking Quotes Out of Context:</strong> A headline might use a quote that sounds controversial, but the full article reveals the quote was part of a larger, more nuanced statement.</li>
+            </ul>
+            <p class="small text-muted mt-3"><strong>Sources:</strong></p>
+            <ul>
+              <li><a href="#" class="link-primary">First Draft News: Guide to Misinformation</a></li>
+              <li><a href="#" class="link-primary">Poynter Institute: How to Spot Fake News</a></li>
+            </ul>
+          `,
+        },
+        3: {
+          title: "The Verge: Tech News with a Human Touch",
+          body: `
+            <p><strong>Profile:</strong> The Verge is an American technology news and media network. It focuses on the intersection of technology, science, art, and culture. Its mission is to explain how technology is changing the world in an accessible and engaging way.</p>
+            <p><strong>Key Characteristics:</strong></p>
+            <ul>
+              <li><strong>Journalistic Standards:</strong> Known for its high-quality production, deep-dive reviews, and a narrative-driven approach to tech journalism. It often includes both the technical specs and the broader cultural impact of a product.</li>
+              <li><strong>Ownership:</strong> A part of Vox Media, which owns several other popular online brands.</li>
+              <li><strong>Political Leanings:</strong> Generally seen as non-partisan, but with a focus on topics like privacy, ethics in AI, and digital rights, which can have political implications.</li>
+            </ul>
+            <p class="small text-muted mt-3"><strong>Sources:</strong></p>
+            <ul>
+              <li><a href="#" class="link-primary">The Verge Editorial Charter</a></li>
+              <li><a href="#" class="link-primary">TechCrunch profile of Vox Media</a></li>
+            </ul>
+          `,
+        },
+      };
+
+      const MOCK_STORIES = Array.from({ length: 150 }).map((_, i) => ({
         id: i + 1,
         title: [
           "Government unveils new education policy focus on digital equity",
@@ -1372,6 +1553,38 @@
           "New travel blog highlights hidden gems in remote Indian villages",
           "Parliamentary debate on new tax reform bill gets heated",
           "Global report shows a decrease in carbon emissions from developing nations",
+          "Local farmer's market sees boom in popularity",
+          "Health study links air pollution to chronic illness",
+          "New law on online gaming sparks controversy",
+          "India's new renewable energy capacity hits record high",
+          "Film industry grappling with piracy challenges",
+          "Community garden project helps local food bank",
+          "New app helps track and reduce your carbon footprint",
+          "Political party releases manifesto focused on youth employment",
+          "Art gallery hosts digital art exhibition powered by AI",
+          "Sports league introduces new concussion safety protocols",
+          "Study finds significant decline in global bee population",
+          "Debate over public land use for commercial development",
+          "Fashion brand launches fully biodegradable clothing line",
+          "New museum dedicated to Indian history opens",
+          "Tech company announces new ethical AI framework",
+          "Report shows steady increase in global life expectancy",
+          "Local cafe becomes a hub for community meetings",
+          "New regulations on plastic waste announced",
+          "India's Olympic athletes prepare for upcoming games",
+          "Festival celebrating diverse cultures draws record crowds",
+          "New government policy aims to protect endangered wildlife",
+          "Fintech startup raises capital with focus on rural banking",
+          "Social media platform under fire for data privacy issues",
+          "New report on global freshwater supplies raises alarm",
+          "Government signs a new trade agreement with European nations",
+          "Popular artist's new album breaks streaming records",
+          "International chess tournament held in Delhi",
+          "New study on the benefits of meditation published",
+          "Billionaire's space company plans moon mission",
+          "Urban farming initiative takes root in several Indian cities",
+          "Major political party announces new leader",
+          "New film explores the history of Indian cuisine",
         ][i],
         source: [
           "Reuters",
@@ -1481,7 +1694,7 @@
           "Culture",
           "Climate",
           "Tech",
-          "Tech",
+          "Entertainment",
           "Culture",
           "Politics",
           "Lifestyle",
@@ -1511,6 +1724,38 @@
           "Lifestyle",
           "Politics",
           "Climate",
+          "Business",
+          "Health",
+          "Politics",
+          "Climate",
+          "Entertainment",
+          "Lifestyle",
+          "Climate",
+          "Politics",
+          "Culture",
+          "Sports",
+          "Science",
+          "Politics",
+          "Lifestyle",
+          "Culture",
+          "Tech",
+          "Health",
+          "Lifestyle",
+          "Climate",
+          "Sports",
+          "Culture",
+          "Climate",
+          "Business",
+          "Tech",
+          "World",
+          "Politics",
+          "Entertainment",
+          "Sports",
+          "Health",
+          "Tech",
+          "Lifestyle",
+          "Politics",
+          "Entertainment",
         ][i],
         factChecked: i % 3 !== 0,
         published: new Date(Date.now() - i * 3600 * 1000).toISOString(),
@@ -1553,7 +1798,7 @@
         bookmarks: JSON.parse(localStorage.getItem("sift-bookmarks") || "[]"),
       };
 
-      let readerModal, mythModal, explainerModal;
+      let readerModal, mythModal, explainerModal, sourceModal;
 
       function applyPrefs() {
         document.documentElement.setAttribute("data-bs-theme", state.theme);
@@ -1784,7 +2029,6 @@
         const titleEl = modal.querySelector("#readerTitle");
         const metaEl = modal.querySelector("#readerMeta");
         const credEl = modal.querySelector("#readerCred");
-        const imageEl = modal.querySelector("#readerImage");
         const bodyEl = modal.querySelector("#readerBody");
         const whyEl = modal.querySelector("#readerWhy");
         const sourcesEl = modal.querySelector("#readerSources");
@@ -1797,11 +2041,6 @@
         )}h ago • ${s.minutes} min`;
         credEl.textContent = `${s.credibility} credibility`;
         credEl.setAttribute("data-level", s.credibility);
-
-        // This line is causing a bug as readerModal doesn't have an image element.
-        // I will comment it out as it's not present in your modal structure.
-        // imageEl.src = s.img;
-        // imageEl.alt = `Related image for ${s.title}`;
 
         bodyEl.innerHTML = s.body;
         whyEl.innerHTML = s.whyCredible.map((x) => `<li>${x}</li>`).join("");
@@ -2150,7 +2389,7 @@
               if (mythData) {
                 document.getElementById(
                   "mythModalTitle"
-                ).innerHTML = `<i class="bi bi-patch-question-fill me-2"></i> ${mythData.title}`;
+                ).innerHTML = `<i class="bi bi-patch-question-fill me-2"></i> Myth Buster: ${mythData.title}`;
                 document.getElementById("mythModalContent").innerHTML =
                   mythData.body;
                 mythModal.show();
@@ -2167,10 +2406,27 @@
               if (explainerData) {
                 document.getElementById(
                   "explainerModalTitle"
-                ).innerHTML = `<i class="bi bi-info-circle-fill me-2"></i> ${explainerData.title}`;
+                ).innerHTML = `<i class="bi bi-info-circle-fill me-2"></i> Explainer: ${explainerData.title}`;
                 document.getElementById("explainerModalContent").innerHTML =
                   explainerData.body;
                 explainerModal.show();
+              }
+            });
+          });
+
+        document
+          .querySelectorAll('[data-bs-target="#sourceModal"]')
+          .forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+              const sourceId = e.currentTarget.dataset.sourceId;
+              const sourceData = SOURCES[sourceId];
+              if (sourceData) {
+                document.getElementById(
+                  "sourceModalTitle"
+                ).innerHTML = `<i class="bi bi-journal-text me-2"></i> Source Spotlight: ${sourceData.title}`;
+                document.getElementById("sourceModalContent").innerHTML =
+                  sourceData.body;
+                sourceModal.show();
               }
             });
           });
@@ -2220,6 +2476,9 @@
         mythModal = new bootstrap.Modal(document.getElementById("mythModal"));
         explainerModal = new bootstrap.Modal(
           document.getElementById("explainerModal")
+        );
+        sourceModal = new bootstrap.Modal(
+          document.getElementById("sourceModal")
         );
       })();
     </script>
