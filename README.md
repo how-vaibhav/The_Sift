@@ -56,6 +56,37 @@ The Sift prioritizes **clarity and trust** over flashy gimmicks. Every design ch
 
 ---
 
+## 📸 Screenshots  
+
+Here are some glimpses of **The Sift** in action:  
+
+<div align="center">
+
+<table>
+  <tr>
+    <td align="center">
+      🏠 <b>Home Page</b><br>
+      <img src="screenshots/home.png" alt="Home Page" width="400"/>
+    </td>
+    <td align="center">
+      📖 <b>Reader Mode</b><br>
+      <img src="screenshots/reader-mode.png" alt="Reader Mode" width="400"/>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      ⚙️ <b>Accessibility Features</b><br>
+      <img src="screenshots/accessibility.png" alt="Accessibility Features" width="400"/>
+    </td>
+    <td align="center">
+      🌙 <b>Dark Mode</b><br>
+      <img src="screenshots/dark-mode.png" alt="Dark Mode" width="400"/>
+    </td>
+  </tr>
+</table>
+
+</div>
+---
 ## 📂 Project Structure  
 ```bash
 The-Sift/
