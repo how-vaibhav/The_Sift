@@ -66,11 +66,11 @@ Here are some glimpses of **The Sift** in action:
   <tc>
     <td align="center">
       🏠 <b>Home Page</b><br>
-      <img src="screenshots/Light.png" alt="Home Page" width="400"/>
+      <img src="screenshots/Light.png" alt="Home Page" width="500"/>
     </td>
     <td align="center">
       🌙 <b>Dark Mode</b><br>
-      <img src="screenshots/Dark.png" alt="Dark Mode" width="400"/>
+      <img src="screenshots/Dark.png" alt="Dark Mode" width="500"/>
     </td>
   </tc>
 </table>
