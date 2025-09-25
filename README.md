@@ -18,7 +18,7 @@ Most news sites today are plagued by:
 ---
 
 ## 💡 Our Solution  
-**The Sift** redefines how news is experienced:  
+**The Sift** redefines how news is experienced : 
 
 - ✨ **Clean, distraction-free design** – minimal ads, whitespace-driven layout, and typography tuned for readability.  
 - 🌍 **Audience presets** – optimized modes for **students, professionals, and elderly readers**.  
