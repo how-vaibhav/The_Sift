@@ -13,7 +13,7 @@ Most news sites today are plagued by:
 - 🧱 **Overwhelming interfaces** filled with ads, clickbait, and clutter.  
 - 🤯 **Poor readability** due to dense text and inconsistent layouts.  
 - 🚫 **Accessibility gaps** that alienate elderly readers, people with visual impairments, or those with dyslexia.  
-- ❌ **Credibility concerns**, as misinformation spreads faster than truth.  
+- ❌ **Credibility concerns**, as misinformation spreads faster than truth .  
 
 ---
 
